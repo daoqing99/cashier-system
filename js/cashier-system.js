@@ -19,7 +19,117 @@ var cashierSystemContainer = new Vue({
             { id: '0', name: '香菇滑鸡饭', yuanjia: 40, price: '20', num: 1 },
             { id: '1', name: '辣子鸡丁', yuanjia: 60, price: '30', num: 1 },
             { id: '2', name: '宫保鸡丁', yuanjia: 50, price: '25', num: 1 }
-        ]
+        ],
+
+        foodNamesList: [
+            "招牌", "肉类", "素食", "小吃", "炖汤", "甜品", "酒类", "套餐", "小炒"
+        ],
+        foodContentList: [
+		       		[
+		                {
+		                    name: "招牌1",
+		                    price: 11
+		                },
+		                {
+		                    name: "招牌1",
+		                    price: 11
+		                }
+
+		            ],
+		            [
+		                {
+		                    name: "肉类2",
+		                    price: 22
+		                },
+		                {
+		                    name: "肉类2",
+		                    price: 22
+		                }
+
+		            ],
+		             [
+		                {
+		                    name: "素食3",
+		                    price: 33
+		                },
+		                {
+		                    name: "素食3",
+		                    price: 33
+		                }
+
+		            ],
+		            [
+		                {
+		                    name: "小吃4",
+		                    price: 44
+		                },
+		                {
+		                    name: "小吃4",
+		                    price: 44
+		                }
+
+		            ],
+		            [
+		                {
+		                    name: "炖汤55",
+		                    price: 55
+		                },
+		                {
+		                    name: "炖汤55",
+		                    price: 55
+		                }
+
+		            ],
+		            [
+		                {
+		                    name: "甜品66",
+		                    price: 66
+		                },
+		                {
+		                    name: "甜品66",
+		                    price: 66
+		                }
+
+		            ],
+		            [
+		                {
+		                    name: "酒类77",
+		                    price: 77
+		                },
+		                {
+		                    name: "酒类77",
+		                    price: 77
+		                }
+
+		            ],
+		             [
+		                {
+		                    name: "套餐88",
+		                    price: 88
+		                },
+		                {
+		                    name: "套餐88",
+		                    price: 88
+		                }
+
+		            ],
+		             [
+		                {
+		                    name: "小炒99",
+		                    price: 99
+		                },
+		                {
+		                    name: "小炒99",
+		                    price: 99
+		                }
+
+		            ]
+
+
+
+
+        ],
+        num:0
 
     },
     methods: {
@@ -78,6 +188,9 @@ var cashierSystemContainer = new Vue({
             };
             return finalNum;
 
+        },
+        tab:function(index){
+        	this.num = index;
         }
 
     }

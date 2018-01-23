@@ -11,6 +11,7 @@ body {
 }
 
 
+
 /* ::-webkit-scrollbar {
         width: 0;
         height: 0;
@@ -19,7 +20,10 @@ body {
 ul,
 li,
 h3,
-body,dl,dt,dd {
+body,
+dl,
+dt,
+dd {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -36,12 +40,16 @@ body,dl,dt,dd {
     float: left;
 }
 
-.hide{
+.hide {
     display: none;
 }
 
+
 /*设置界面*/
+
+
 /*左边*/
+
 .system {
     height: 100%;
     width: 7.1%;
@@ -55,7 +63,7 @@ body,dl,dt,dd {
     text-align: center;
     padding-top: 15px;
     height: 65px;
-    font-size: 12px; 
+    font-size: 12px;
 }
 
 .jiaoban,
@@ -75,13 +83,18 @@ body,dl,dt,dd {
     background-color: #38cecc;
     color: #fff;
 }
-.active2{
+
+.active2 {
     background-color: #38cecc;
     color: #fff;
 }
 
+
 /*收银界面*/
+
+
 /*中间*/
+
 .cashier {
     width: 26.4%;
     margin-left: 10px;
@@ -95,8 +108,8 @@ body,dl,dt,dd {
     overflow: hidden;
 }
 
-.selected-item{
-        background-color: #38cecc;
+.selected-item {
+    background-color: #38cecc;
     padding-left: 14px;
     line-height: 50px;
     height: 50px;
@@ -185,9 +198,9 @@ body,dl,dt,dd {
 .getfood .food-item .food-num input {
     text-align: center;
     outline: medium;
-    border:none;
-    height:26px;
-    width:30px;
+    border: none;
+    height: 26px;
+    width: 30px;
 }
 
 .getfood .food-item .food-num img {
@@ -237,22 +250,24 @@ body,dl,dt,dd {
     text-align: center;
     margin-left: 5px;
     margin-right: 5px;
-    border:1px solid #ff6160;
+    border: 1px solid #ff6160;
     border-radius: 30px;
 }
 
-.cashier .checkout-content .btns .checkout2,.cashier .checkout-content .btns .clear2{
+.cashier .checkout-content .btns .checkout2,
+.cashier .checkout-content .btns .clear2 {
     width: 43%;
     float: left;
-    border:1px solid #ff6160;
+    border: 1px solid #ff6160;
     border-radius: 20px;
 }
+
 .cashier .checkout-content .clear {
     /*background: url(../img/btn_houfu.png) 0 0 no-repeat;*/
 }
-.cashier .checkout-content .clear2 {
-   
-}
+
+.cashier .checkout-content .clear2 {}
+
 .cashier .checkout-content .pay {
     /*background: url(../img/btn_houfu.png) 0 0 no-repeat;*/
 }
@@ -260,13 +275,14 @@ body,dl,dt,dd {
 .cashier .checkout-content .checkout {
     /*background: url(../img/btn_clearing.png) 0 0 no-repeat;*/
     color: #fff;
-    background-color:#ff6160;
+    background-color: #ff6160;
 }
+
 .cashier .checkout-content .checkout2 {
     /*background: url(../img/btn_clearing.png) 0 0 no-repeat;*/
     /*background-size:contain;*/
     color: #fff;
-    background-color:#ff6160;
+    background-color: #ff6160;
 }
 
 .cashier .checkout-content .nums {
@@ -297,7 +313,7 @@ body,dl,dt,dd {
 }
 
 .cashier .checkout-content .shishou2 {
-   text-align:right;
+    text-align: right;
     font-size: 16px;
     color: #f00;
     font-weight: 600;
@@ -319,8 +335,12 @@ body,dl,dt,dd {
 }
 
 
+
 /*菜单界面*/
+
+
 /*右边*/
+
 .food {
     margin-left: 10px;
     width: 65%;
@@ -328,69 +348,81 @@ body,dl,dt,dd {
     position: relative;
 }
 
+.food .food-names {
+    overflow: hidden;
+    background-color: #fff;
+}
+
 .food .title {
     float: left;
     font-size: 16px;
     background-color: #fff;
 
-    /*width: 80%;*/
+    width: 74%;
 }
 
-.food .food-taste{
+.food .food-taste {
     background-color: #fff;
     position: absolute;
-    top:25%;
+    top: 25%;
     width: 460px;
     height: 350px;
     left: 50%;
     margin-left: -230px;
     padding-top: 25px;
 }
-.food .food-taste .btn-confirm{
+
+.food .food-taste .btn-confirm {
     overflow: hidden;
 }
 
-.food .food-taste .btn-confirm div{
+.food .food-taste .btn-confirm div {
     float: left;
     width: 45%;
     text-align: center;
-    height:40px;
+    height: 40px;
     line-height: 40px;
-    border:1px solid #ff6160;
+    border: 1px solid #ff6160;
     border-radius: 10px;
-    margin:10px;
+    margin: 10px;
 }
-.food .food-taste .btn-confirm .cancel{
+
+.food .food-taste .btn-confirm .cancel {
     color: #ff6160;
 }
-.food .food-taste .btn-confirm .sure{
+
+.food .food-taste .btn-confirm .sure {
     color: #fff;
     background-color: #ff6160;
 }
-.food .food-taste h3{
+
+.food .food-taste h3 {
     font-size: 20px;
     font-weight: 300;
     line-height: 36px;
-    border-bottom:1px dashed #e5e5e5;
+    border-bottom: 1px dashed #e5e5e5;
 }
-.food .food-taste .guige{
-    padding-left: 25px;
 
+.food .food-taste .guige {
+    padding-left: 25px;
 }
-.food .food-taste .guige ul{
+
+.food .food-taste .guige ul {
     overflow: hidden;
 }
-.food .food-taste .guige ul li{
-    float:left;
-    height:50px;
+
+.food .food-taste .guige ul li {
+    float: left;
+    height: 50px;
     line-height: 50px;
     width: 30%;
     text-align: center;
     border-radius: 10px;
-    border:1px solid #38cecc;
-    margin:18px 5px;
+    border: 1px solid #38cecc;
+    margin: 18px 5px;
 }
-.food .package-food{
+
+.food .package-food {
     font-size: 16px;
     background-color: #38cecc;
     padding: 15px 0;
@@ -398,10 +430,11 @@ body,dl,dt,dd {
     color: #fff;
 }
 
-.food .package-food .package-price{
+.food .package-food .package-price {
     color: #ff6160;
     padding-left: 10px;
 }
+
 .food .title>div {
     float: left;
     padding: 15px 24px;
@@ -431,12 +464,11 @@ body,dl,dt,dd {
     border-bottom-left-radius: 50px;
     background-color: #e5e5e5;
     height: 40px;
-    text-align: center;
+    padding-left: 10%;
     background-image: url('../img/icn_find.png');
     background-repeat: no-repeat;
     background-position: 128px center;
     padding-right: 20px;
-    /*position: relative;*/
 }
 
 .food .food-box {
@@ -446,19 +478,23 @@ body,dl,dt,dd {
     overflow: scroll;
     width: 100%;
 }
-.food .food-box .big-type{
+
+.food .food-box .big-type {
     border-bottom: 1px dashed #bfbfbf;
     line-height: 36px;
     margin-bottom: 8px;
 }
-.food .food-box .foot-names{
+
+.food .food-box .foot-names {
     overflow: hidden;
-    padding-top: 5px;
+    /*padding-top: 5px;*/
 }
+
 .food .food-box .food-name {
     background-color: #fff;
     float: left;
     margin: 8px;
+    margin-top: 10px;
     cursor: pointer;
     line-height: 40px;
     position: relative;
@@ -489,26 +525,31 @@ body,dl,dt,dd {
     color: #f00;
 }
 
+
 /*收银界面*/
 
-.shouyin-container{
+.shouyin-container {
     margin-left: 10px;
     float: left;
     width: 65%;
     font-size: 16px;
 }
-.shouyin-container .shouyin-way{
+
+.shouyin-container .shouyin-way {
     width: 100%;
     overflow: hidden;
-    
+
     border-radius: 10px;
 }
-.shouyin-container .shouyin-way .payway,.shouyin-container .shouyin-way .member{
-   float: left;
-   margin-left: 10px;
-   background-color: #fff;
+
+.shouyin-container .shouyin-way .payway,
+.shouyin-container .shouyin-way .member {
+    float: left;
+    margin-left: 10px;
+    background-color: #fff;
 }
-.shouyin-container .shouyin-way .payway{
+
+.shouyin-container .shouyin-way .payway {
     padding: 15px;
     width: 59%;
     background-color: #fff;
@@ -516,118 +557,136 @@ body,dl,dt,dd {
     padding-bottom: 20px;
     margin-left: 0;
 }
-.shouyin-container .shouyin-way .member{
+
+.shouyin-container .shouyin-way .member {
     border-radius: 8px;
     width: 30%;
     color: #000;
-    padding:20px;
+    padding: 20px;
     font-size: 16px;
-    
+
     line-height: 42px;
 }
-.shouyin-container .shouyin-way .member .btn{
+
+.shouyin-container .shouyin-way .member .btn {
     padding-top: 10px;
     border-bottom: none;
 }
-.shouyin-container .shouyin-way .member li{
+
+.shouyin-container .shouyin-way .member li {
     border-bottom: 1px solid #e5e5e5;
 }
-.shouyin-container .shouyin-way .member li span{
+
+.shouyin-container .shouyin-way .member li span {
     float: right;
     color: #f00;
 }
-.shouyin-container .shouyin-way .member li button{
-    border:none;
-    border:1px solid #38cecc;
-    outline:none;
+
+.shouyin-container .shouyin-way .member li button {
+    border: none;
+    border: 1px solid #38cecc;
+    outline: none;
     background-color: #fff;
     line-height: 40px;
-    margin:5px;
-    width:28%;
+    margin: 5px;
+    width: 28%;
     border-radius: 20px;
     height: 40px;
 }
-.shouyin-container .shouyin-way .payway ul{
+
+.shouyin-container .shouyin-way .payway ul {
     overflow: hidden;
 }
-.shouyin-container .shouyin-way .payway ul li{
+
+.shouyin-container .shouyin-way .payway ul li {
     float: left;
     height: 40px;
     width: 90px;
     margin: 5px;
-    border:1px solid #38cecc;
+    border: 1px solid #38cecc;
     border-radius: 30px;
     text-align: center;
     line-height: 40px;
     color: #38cecc;
 }
 
-.active3{
+.active3 {
     background-color: #38cecc!important;
     color: #fff!important;
 }
 
-.shouyin-container .shouyin-way .payway ul .coupons{
+.shouyin-container .shouyin-way .payway ul .coupons {
     width: 100px;
     height: 50px;
-    border:1px solid #38cecc;
+    border: 1px solid #38cecc;
     border-radius: 8px;
     line-height: 25px;
 }
-.shouyin-container .calc{
+
+.shouyin-container .calc {
     color: #000;
     overflow: hidden;
     margin-top: 10px;
-
 }
-.colorred{
+
+.colorred {
     color: red;
 }
-.shouyin-container .calc .payway-select{
+
+.shouyin-container .calc .payway-select {
     padding: 20px;
     line-height: 50px;
     width: 46%;
     border-radius: 8px;
     padding-top: 0;
 }
-.shouyin-container .calc .payway-select .txt{
-    width:28%;
+
+.shouyin-container .calc .payway-select .txt {
+    width: 28%;
     float: left;
 }
-.shouyin-container .calc .payway-select .money{
-    border-bottom:1px solid #e5e5e5;
+
+.shouyin-container .calc .payway-select .money {
+    border-bottom: 1px solid #e5e5e5;
 }
-.shouyin-container .calc .payway-select .money span{
+
+.shouyin-container .calc .payway-select .money span {
     padding-right: 40px;
 }
-.shouyin-container .calc .payway-select ul li{
-   border-bottom:1px solid #e5e5e5;
-}
-.shouyin-container .calc .payway-select ul li input,.shouyin-container .calc .payway-select ul li input:focus{
-    height: 30px;
-    border:none;
-    width: 62%;
-   outline:medium;
-   color: #f00;
 
+.shouyin-container .calc .payway-select ul li {
+    border-bottom: 1px solid #e5e5e5;
 }
-.shouyin-container .calc .payway-select ul li input:focus{
+
+.shouyin-container .calc .payway-select ul li input,
+.shouyin-container .calc .payway-select ul li input:focus {
+    height: 30px;
+    border: none;
+    width: 62%;
+    outline: medium;
+    color: #f00;
+}
+
+.shouyin-container .calc .payway-select ul li input:focus {
     background-color: #e5e5e5;
 }
-.active4{
+
+.active4 {
     background-color: #e5e5e5;
 }
-.shouyin-container .calc .payway-select ul li img{
+
+.shouyin-container .calc .payway-select ul li img {
     vertical-align: middle;
 }
-.shouyin-container .calc .payway-select,.shouyin-container .calc .keybord{
+
+.shouyin-container .calc .payway-select,
+.shouyin-container .calc .keybord {
     float: left;
     background-color: #fff;
     font-size: 16px;
-    
 }
 
-.shouyin-container .calc .keybord{
+.shouyin-container .calc .keybord {
     padding: 15px;
     padding-right: 0;
     width: 44.5%;
@@ -635,10 +694,12 @@ body,dl,dt,dd {
     border-radius: 8px;
     padding-bottom: 18px;
 }
-.shouyin-container .calc .keybord ul{
+
+.shouyin-container .calc .keybord ul {
     overflow: hidden;
 }
-.shouyin-container .calc .keybord ul li{
+
+.shouyin-container .calc .keybord ul li {
     margin: 5px;
     float: left;
     height: 50px;
@@ -650,54 +711,62 @@ body,dl,dt,dd {
     box-shadow: 0 4px 5px #d3d3d3;
     border-radius: 8px;
 }
-.shouyin-container .calc .keybord ul li img{
+
+.shouyin-container .calc .keybord ul li img {
     padding-top: 15px;
 }
-.shouyin-container .calc .keybord ul li.huilv{
+
+.shouyin-container .calc .keybord ul li.huilv {
     width: 63%;
 }
 
-.shouyin-container .eat{
+.shouyin-container .eat {
     height: 80px;
     line-height: 80px;
-    color:#000;
+    color: #000;
     background-color: #fff;
     border-radius: 8px;
     padding-left: 30px;
-    margin-top:10px;
+    margin-top: 10px;
     margin-right: 2%;
 }
-.shouyin-container .eat input{
+
+.shouyin-container .eat input {
     width: 40%;
     height: 40px;
     border: none;
-    outline:medium;
+    outline: medium;
     background-color: #e5e5e5;
     margin-left: 20px;
     border-radius: 20px;
     padding-left: 20px;
 }
-.shouyin-container .eat button{
-    border:none;
+
+.shouyin-container .eat button {
+    border: none;
     outline: none;
     height: 40px;
     width: 120px;
     border-radius: 20px;
 }
-.shouyin-container .eat .btns{
+
+.shouyin-container .eat .btns {
     float: right;
     margin-right: 20px;
 }
-.shouyin-container .eat .btns .tangshi{
+
+.shouyin-container .eat .btns .tangshi {
     background-color: #ff6160;
-    color:#fff;
+    color: #fff;
 }
-.shouyin-container .eat .btns .ziqu{
+
+.shouyin-container .eat .btns .ziqu {
     background-color: #fff;
-    border:1px solid #ff6160;
-    color:#ff6160;
+    border: 1px solid #ff6160;
+    color: #ff6160;
 }
-.shouyin-container .eat .btns .fanhui{
+
+.shouyin-container .eat .btns .fanhui {
     background-color: #38cecc;
     color: #fff;
 }

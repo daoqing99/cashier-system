@@ -105,72 +105,41 @@
         </div>
         <!-- 右边 -->
         <div class="food" v-if="p1ShowChild">
-            <div class="title" v-if="p1Show">
-                <div class="active">招牌</div>
-                <div class="">肉类</div>
-                <div class="">素食</div>
-                <div class="">炖汤</div>
-                <div class="">甜品</div>
-                <div class="">招牌</div>
-                <div class="">招牌</div>
-                <div class="">招牌</div>
-                <div class="">水果沙拉</div>
-            </div>
-            <div class="search" v-if="p1Show">
-                <input type="text">
-                <!-- <img src="img/icn_find.png" alt=""> -->
+            <div class="food-names" v-if="p1Show">
+                <div class="title">
+                    <div v-for="(foodName,foodNameIndex) in foodNamesList" :class="{active:foodNameIndex==num}" @click="tab(foodNameIndex)">{{foodName}}</div>
+                    <!-- <div class="">肉类</div>
+                    <div class="">素食</div>
+                    <div class="">炖汤</div>
+                    <div class="">甜品</div>
+                    <div class="">招牌</div>
+                    <div class="">招牌</div>
+                    <div class="">招牌</div>       -->            
+                </div>
+                <div class="search">
+                    <input type="text">
+                    <!-- <img src="img/icn_find.png" alt=""> -->
+                </div>
             </div>
             <div class="package-food" v-if="p2Show">牛排套餐 <span class="package-price">¥58</span></div>
+
             <div class="food-box">
-                <div class="foot-names">
+                <div class="foot-names" v-for='(food,foodContentIndex) in foodContentList'>
                     <div class="big-type" v-if="p2Show">
                         主菜 1/1
                     </div>
-                    <div class="food-name">
+                    <div class="food-name" v-for="fo in food" v-show="foodContentIndex == num">
+                        {{fo.name}}
+                        <div class="price">¥{{fo.price}}</div>
+                        <span class='badge'>1</span>
+                    </div>
+                   <!--  <div class="food-name">
                         水煮鱼
                         <div class="price">¥50</div>
                         <span class='badge'>1</span>
-                    </div>
-                    <div class="food-name">
-                        水煮鱼
-                        <div class="price">¥50</div>
-                        <span class='badge'>1</span>
-                    </div>
-                    <div class="food-name">
-                        水煮鱼
-                        <div class="price">¥50</div>
-                        <span class='badge'>1</span>
-                    </div>
-                    <div class="food-name">
-                        水煮鱼
-                        <div class="price">¥50</div>
-                        <span class='badge'>1</span>
-                    </div>
-                    <div class="food-name">
-                        水煮鱼
-                        <div class="price">¥50</div>
-                        <span class='badge'>1</span>
-                    </div>
-                    <div class="food-name">
-                        水煮鱼
-                        <div class="price">¥50</div>
-                        <span class='badge'>1</span>
-                    </div>
-                    <div class="food-name">
-                        水煮鱼
-                        <div class="price">¥50</div>
-                        <span class='badge'>1</span>
-                    </div>
-                    <div class="food-name">
-                        水煮鱼
-                        <div class="price">¥50</div>
-                        <span class='badge'>1</span>
-                    </div>
-                    <div class="food-name">
-                        水煮鱼
-                        <div class="price">¥50</div>
-                        <span class='badge'>1</span>
-                    </div>
+                    </div> -->
+                   
+                  
                 </div>
             </div>
             <div class="food-taste hide">
