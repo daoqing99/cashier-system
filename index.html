@@ -58,228 +58,37 @@
                 </div>
             </div>
             <div class="getfood">
-                <div class="food-item">
+                <div class="food-item" v-for="(food,foodIndex) in productsList">
                     <div class="food-content">
-                        <div class="food-name">牛肉炖土豆</div>
+                        <div class="food-name">{{food.name}}</div>
                         <div class="price">
-                            <span class="yuanjia">¥58 </span> <span class="xianjia">¥40</span>
+                            <span class="yuanjia">¥{{food.yuanjia}} </span> <span class="xianjia">¥{{food.price}}</span>
                         </div>
                     </div>
                     <div class="food-num">
-                        <img src="img/btn_minus.png" alt="">
-                        <span>1</span>
-                        <img src="img/btn_plus.png" alt="">
+                        <img src="img/btn_minus.png" alt="" @click="minus(foodIndex)">
+                      
+                        <input v-model="food.num" type="text">
+                        <img src="img/btn_plus.png" alt="" @click="add(foodIndex)">
                     </div>
                 </div>
-                <div class="food-item">
-                    <div class="food-content">
-                        <div class="food-name">牛肉炖土豆</div>
-                        <div class="price">
-                            <span class="yuanjia">¥58 </span> <span class="xianjia">¥40</span>
-                        </div>
-                    </div>
-                    <div class="food-num">
-                        <img src="img/btn_minus.png" alt="">
-                        <span>1</span>
-                        <img src="img/btn_plus.png" alt="">
-                    </div>
-                </div>
-                <div class="food-item">
-                    <div class="food-content">
-                        <div class="food-name">牛肉炖土豆</div>
-                        <div class="price">
-                            <span class="yuanjia">¥58 </span> <span class="xianjia">¥40</span>
-                        </div>
-                    </div>
-                    <div class="food-num">
-                        <img src="img/btn_minus.png" alt="">
-                        <span>1</span>
-                        <img src="img/btn_plus.png" alt="">
-                    </div>
-                </div>
-                <div class="food-item">
-                    <div class="food-content">
-                        <div class="food-name">牛肉炖土豆</div>
-                        <div class="price">
-                            <span class="yuanjia">¥58 </span> <span class="xianjia">¥40</span>
-                        </div>
-                    </div>
-                    <div class="food-num">
-                        <img src="img/btn_minus.png" alt="">
-                        <span>1</span>
-                        <img src="img/btn_plus.png" alt="">
-                    </div>
-                </div>
-                <div class="food-item">
-                    <div class="food-content">
-                        <div class="food-name">牛肉炖土豆</div>
-                        <div class="price">
-                            <span class="yuanjia">¥58 </span> <span class="xianjia">¥40</span>
-                        </div>
-                    </div>
-                    <div class="food-num">
-                        <img src="img/btn_minus.png" alt="">
-                        <span>1</span>
-                        <img src="img/btn_plus.png" alt="">
-                    </div>
-                </div>
-                <div class="food-item">
-                    <div class="food-content">
-                        <div class="food-name">牛肉炖土豆</div>
-                        <div class="price">
-                            <span class="yuanjia">¥58 </span> <span class="xianjia">¥40</span>
-                        </div>
-                    </div>
-                    <div class="food-num">
-                        <img src="img/btn_minus.png" alt="">
-                        <span>1</span>
-                        <img src="img/btn_plus.png" alt="">
-                    </div>
-                </div>
-                <div class="food-item">
-                    <div class="food-content">
-                        <div class="food-name">牛肉炖土豆</div>
-                        <div class="price">
-                            <span class="yuanjia">¥58 </span> <span class="xianjia">¥40</span>
-                        </div>
-                    </div>
-                    <div class="food-num">
-                        <img src="img/btn_minus.png" alt="">
-                        <span>1</span>
-                        <img src="img/btn_plus.png" alt="">
-                    </div>
-                </div>
-                <div class="food-item">
-                    <div class="food-content">
-                        <div class="food-name">牛肉炖土豆</div>
-                        <div class="price">
-                            <span class="yuanjia">¥58 </span> <span class="xianjia">¥40</span>
-                        </div>
-                    </div>
-                    <div class="food-num">
-                        <img src="img/btn_minus.png" alt="">
-                        <span>1</span>
-                        <img src="img/btn_plus.png" alt="">
-                    </div>
-                </div>
-                <div class="food-item">
-                    <div class="food-content">
-                        <div class="food-name">牛肉炖土豆</div>
-                        <div class="price">
-                            <span class="yuanjia">¥58 </span> <span class="xianjia">¥40</span>
-                        </div>
-                    </div>
-                    <div class="food-num">
-                        <img src="img/btn_minus.png" alt="">
-                        <span>1</span>
-                        <img src="img/btn_plus.png" alt="">
-                    </div>
-                </div>
-                <div class="food-item">
-                    <div class="food-content">
-                        <div class="food-name">牛肉炖土豆</div>
-                        <div class="price">
-                            <span class="yuanjia">¥58 </span> <span class="xianjia">¥40</span>
-                        </div>
-                    </div>
-                    <div class="food-num">
-                        <img src="img/btn_minus.png" alt="">
-                        <span>1</span>
-                        <img src="img/btn_plus.png" alt="">
-                    </div>
-                </div>
-                <div class="food-item">
-                    <div class="food-content">
-                        <div class="food-name">牛肉炖土豆</div>
-                        <div class="price">
-                            <span class="yuanjia">¥58 </span> <span class="xianjia">¥40</span>
-                        </div>
-                    </div>
-                    <div class="food-num">
-                        <img src="img/btn_minus.png" alt="">
-                        <span>1</span>
-                        <img src="img/btn_plus.png" alt="">
-                    </div>
-                </div>
-                <div class="food-item">
-                    <div class="food-content">
-                        <div class="food-name">牛肉炖土豆</div>
-                        <div class="price">
-                            <span class="yuanjia">¥58 </span> <span class="xianjia">¥40</span>
-                        </div>
-                    </div>
-                    <div class="food-num">
-                        <img src="img/btn_minus.png" alt="">
-                        <span>1</span>
-                        <img src="img/btn_plus.png" alt="">
-                    </div>
-                </div>
-                <div class="food-item">
-                    <div class="food-content">
-                        <div class="food-name">牛肉炖土豆</div>
-                        <div class="price">
-                            <span class="yuanjia">¥58 </span> <span class="xianjia">¥40</span>
-                        </div>
-                    </div>
-                    <div class="food-num">
-                        <img src="img/btn_minus.png" alt="">
-                        <span>1</span>
-                        <img src="img/btn_plus.png" alt="">
-                    </div>
-                </div>
-                <div class="food-item">
-                    <div class="food-content">
-                        <div class="food-name">牛肉炖土豆</div>
-                        <div class="price">
-                            <span class="yuanjia">¥58 </span> <span class="xianjia">¥40</span>
-                        </div>
-                    </div>
-                    <div class="food-num">
-                        <img src="img/btn_minus.png" alt="">
-                        <span>1</span>
-                        <img src="img/btn_plus.png" alt="">
-                    </div>
-                </div>
-                <div class="food-item">
-                    <div class="food-content">
-                        <div class="food-name">牛肉炖土豆</div>
-                        <div class="price">
-                            <span class="yuanjia">¥58 </span> <span class="xianjia">¥40</span>
-                        </div>
-                    </div>
-                    <div class="food-num">
-                        <img src="img/btn_minus.png" alt="">
-                        <span>1</span>
-                        <img src="img/btn_plus.png" alt="">
-                    </div>
-                </div>
-                <div class="food-item">
-                    <div class="food-content">
-                        <div class="food-name">牛肉炖土豆</div>
-                        <div class="price">
-                            <span class="yuanjia">¥58 </span> <span class="xianjia">¥40</span>
-                        </div>
-                    </div>
-                    <div class="food-num">
-                        <img src="img/btn_minus.png" alt="">
-                        <span>1</span>
-                        <img src="img/btn_plus.png" alt="">
-                    </div>
-                </div>
+               
+               
+              
             </div>
             <div class="checkout-content">
                 <div class="nums">
                     <div v-if="p1Show">
-                        <span class="total">共3份</span>
-                        <span class="heji">合计¥100</span>
+                        <span class="total">共{{totalNumber()}}份</span>
+                        <span class="heji">合计¥{{totalPrice()}}</span>
                     </div>
-                    <div class="youhui" v-if="p1Show">优惠 ¥100</div>
+                    <div class="youhui" v-if="p1Show">优惠 ¥{{promotionPrice()}}</div>
                     <div class="info" v-if="p1Show">
                         <div>备注：</div>
                         <div class="content">
                             坦坦荡荡挂号费个地方官丰东股份工服费饿饿
                         </div>
-                        <span class="shishou">实收 ¥100</span>
+                        <span class="shishou">实收 ¥{{finalPrice()}}</span>
                     </div>
                     <div class="shishou2" v-if="p2Show">合计¥100</div>
                 </div>

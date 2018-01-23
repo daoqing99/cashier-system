@@ -182,8 +182,12 @@ body,dl,dt,dd {
     height: 100%;
 }
 
-.getfood .food-item .food-num span {
-    margin: 0 10px;
+.getfood .food-item .food-num input {
+    text-align: center;
+    outline: medium;
+    border:none;
+    height:26px;
+    width:30px;
 }
 
 .getfood .food-item .food-num img {
