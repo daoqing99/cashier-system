@@ -1,198 +1,139 @@
 var cashierSystemContainer = new Vue({
-    el: "#contaniner",
-    data: {
-        // p1 不是套餐界面
-        p1Show: true,
-        p1ShowChild: true,
-        p2Show: false,
+	el: "#contaniner",
+	data: {
+		// p1 不是套餐界面
+		p1Show: true,
+		p1ShowChild: true,
+		p2Show: false,
 
-        // p2套餐界面
-        // p1Show: false,
-        // p1ShowChild: true,
-        // p2Show: true,
+		// p2套餐界面
+		// p1Show: false,
+		// p1ShowChild: true,
+		// p2Show: true,
 
-        // 收银，支付方式界面
-        // p1Show: true,
-        // p1ShowChild: false,
-        // p2Show: false,
-        productsList: [
-            { id: '0', name: '香菇滑鸡饭', yuanjia: 40, price: '20', num: 1 },
-            { id: '1', name: '辣子鸡丁', yuanjia: 60, price: '30', num: 1 },
-            { id: '2', name: '宫保鸡丁', yuanjia: 50, price: '25', num: 1 }
-        ],
+		// 收银，支付方式界面
+		// p1Show: true,
+		// p1ShowChild: false,
+		// p2Show: false,
+		productsList: [{
+				id: '0',
+				name: '香菇滑鸡饭',
+				yuanjia: 40,
+				price: '20',
+				num: 1
+			},
+			{
+				id: '1',
+				name: '辣子鸡丁',
+				yuanjia: 60,
+				price: '30',
+				num: 1
+			},
+			{
+				id: '2',
+				name: '宫保鸡丁',
+				yuanjia: 50,
+				price: '25',
+				num: 1
+			}
+		],
+		pageNum: 0,
+		allProductList: [], //所有产品
+		shopProductList: [],
+		siteProductPackList: []
+	},
+	created: function() {
+		var that = this;
+		axios.get('http://icy.iidingyun.com/api/shop/shop_product_cashier_select.vm', {
+				params: {
+					shopid: "65428"
+				}
+			})
+			.then(function(res) {
+				if(res.data.code == "success") {
 
-        foodNamesList: [
-            "招牌", "肉类", "素食", "小吃", "炖汤", "甜品", "酒类", "套餐", "小炒"
-        ],
-        foodContentList: [
-		       		[
-		                {
-		                    name: "招牌1",
-		                    price: 11
-		                },
-		                {
-		                    name: "招牌1",
-		                    price: 11
-		                }
+					// console.log(JSON.stringify(res.data.data));
 
-		            ],
-		            [
-		                {
-		                    name: "肉类2",
-		                    price: 22
-		                },
-		                {
-		                    name: "肉类2",
-		                    price: 22
-		                }
+					that.allProductList = res.data.data;
 
-		            ],
-		             [
-		                {
-		                    name: "素食3",
-		                    price: 33
-		                },
-		                {
-		                    name: "素食3",
-		                    price: 33
-		                }
+					console.log("allProductList:", that.allProductList);
 
-		            ],
-		            [
-		                {
-		                    name: "小吃4",
-		                    price: 44
-		                },
-		                {
-		                    name: "小吃4",
-		                    price: 44
-		                }
+				} else {
+					console.log(res.data.msg);
+				}
+			})
+			.catch(function(error) {
+				console.log(error);
+			});
 
-		            ],
-		            [
-		                {
-		                    name: "炖汤55",
-		                    price: 55
-		                },
-		                {
-		                    name: "炖汤55",
-		                    price: 55
-		                }
+	},
+	methods: {
+		selectfood:function(allfoodIndex,foodIndex){
+				//var foodData=cashierSystemContainer.allProductList[allfoodIndex].shop_product[foodIndex];
+				//cashierSystemContainer.productsList.push(foodData);
+		},
+		foodSwitch: function(index) {
+			console.log(index);
+			this.pageNum = index;
 
-		            ],
-		            [
-		                {
-		                    name: "甜品66",
-		                    price: 66
-		                },
-		                {
-		                    name: "甜品66",
-		                    price: 66
-		                }
+		},
+		add: function(index) {
+			if(this.productsList[index].num < 100) {
+				this.productsList[index].num++;
 
-		            ],
-		            [
-		                {
-		                    name: "酒类77",
-		                    price: 77
-		                },
-		                {
-		                    name: "酒类77",
-		                    price: 77
-		                }
+			}
+		},
+		minus: function(index) {
+			if(this.productsList[index].num > 0) {
+				this.productsList[index].num--;
+			};
 
-		            ],
-		             [
-		                {
-		                    name: "套餐88",
-		                    price: 88
-		                },
-		                {
-		                    name: "套餐88",
-		                    price: 88
-		                }
+			console.log(this.productsList[index].num);
 
-		            ],
-		             [
-		                {
-		                    name: "小炒99",
-		                    price: 99
-		                },
-		                {
-		                    name: "小炒99",
-		                    price: 99
-		                }
+			if(this.productsList[index].num == 0) {
 
-		            ]
+				setTimeout(function() {
 
+					cashierSystemContainer.productsList.splice(index, 1)
+				}, 500)
 
+			}
+		},
+		totalNumber: function() {
+			var totalNum = 0;
+			for(var i = 0; i < this.productsList.length; i++) {
+				totalNum += this.productsList[i].num;
+			};
+			return totalNum;
+		},
+		totalPrice: function() {
+			var totalPriceNum = 0;
 
+			for(var j = 0; j < this.productsList.length; j++) {
+				totalPriceNum += this.productsList[j].yuanjia * this.productsList[j].num;
+			};
+			return totalPriceNum;
 
-        ],
-        num:0
+		},
 
-    },
-    methods: {
-        add: function(index) {
-            if (this.productsList[index].num < 100) {
-                this.productsList[index].num++;
+		promotionPrice: function() {
+			var promotionNum = 0;
 
-            }
-        },
-        minus: function(index) {
-            if (this.productsList[index].num > 0) {
-                this.productsList[index].num--;
-            };
+			for(var m = 0; m < this.productsList.length; m++) {
+				promotionNum += (this.productsList[m].yuanjia - this.productsList[m].price) * this.productsList[m].num;
+			};
+			return promotionNum;
 
-            console.log(this.productsList[index].num);
+		},
+		finalPrice: function() {
+			var finalNum = 0;
+			for(var n = 0; n < this.productsList.length; n++) {
+				finalNum += this.productsList[n].price * this.productsList[n].num;
+			};
+			return finalNum;
 
-            if (this.productsList[index].num == 0) {
+		}
 
-                setTimeout(function() {
-
-                    cashierSystemContainer.productsList.splice(index, 1)
-                }, 500)
-
-            }
-        },
-        totalNumber: function() {
-            var totalNum = 0;
-            for (var i = 0; i < this.productsList.length; i++) {
-                totalNum += this.productsList[i].num;
-            };
-            return totalNum;
-        },
-        totalPrice: function() {
-            var totalPriceNum = 0;
-
-            for (var j = 0; j < this.productsList.length; j++) {
-                totalPriceNum += this.productsList[j].yuanjia * this.productsList[j].num;
-            };
-            return totalPriceNum;
-
-        },
-
-        promotionPrice: function() {
-            var promotionNum = 0;
-
-            for (var m = 0; m < this.productsList.length; m++) {
-                promotionNum += (this.productsList[m].yuanjia - this.productsList[m].price) * this.productsList[m].num;
-            };
-            return promotionNum;
-
-        },
-        finalPrice: function() {
-            var finalNum = 0;
-            for (var n = 0; n < this.productsList.length; n++) {
-                finalNum += this.productsList[n].price * this.productsList[n].num;
-            };
-            return finalNum;
-
-        },
-        tab:function(index){
-        	this.num = index;
-        }
-
-    }
+	}
 
 })

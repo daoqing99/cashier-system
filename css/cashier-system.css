@@ -134,11 +134,11 @@ dd {
     width: 78px;
     text-align: center;
     margin-right: 1px;
-    padding-left: 10px;
+    padding-left: 15px;
 }
 
 .cashier .title .item img {
-    padding: 16px;
+    padding: 15px;
     float: right;
 }
 
