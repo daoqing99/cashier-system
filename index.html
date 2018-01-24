@@ -58,7 +58,25 @@
 					</div>
 				</div>
 				<div class="getfood">
-					<div class="food-item" v-for="(food,foodIndex) in shopProductList">
+					<!--单品点餐-->
+					<div class="food-item" v-if="p1Show" v-for="(food,foodIndex) in shopProductList">
+						<div class="food-content">
+							<!--{{food}}-->
+							<div class="food-name">{{food.product_name}}</div>
+							<div class="price">
+								<span class="yuanjia">¥{{food.site_price}} </span> <span class="xianjia">¥{{food.price}}</span>
+							</div>
+						</div>
+						<div class="food-num">
+							<img src="img/btn_minus.png" alt="" @click="minus(foodIndex)">
+							<input v-model="food.num" type="text">
+							<!--<span>{{food.num}}</span>-->
+							<img src="img/btn_plus.png" alt="" @click="add(foodIndex)">
+						</div>
+					</div>
+
+					<!--套餐点餐-->
+					<div class="food-item" v-if="p2Show" v-for="(food,foodIndex) in packProductList">
 						<div class="food-content">
 							<!--{{food}}-->
 							<div class="food-name">{{food.product_name}}</div>
@@ -108,36 +126,38 @@
 						<div v-for="(foodName,foodNameIndex) in allProductList" :class="{active:foodNameIndex==pageNum}" @click="foodSwitch(foodNameIndex)">
 							{{foodName.type_name}}
 						</div>
-						<!-- <div class="">肉类</div>
-                    <div class="">素食</div>
-                    <div class="">炖汤</div>
-                    <div class="">甜品</div>
-                    <div class="">招牌</div>
-                    <div class="">招牌</div>
-                    <div class="">招牌</div>       -->
+
 					</div>
 					<div class="search">
 						<input type="text">
 						<!-- <img src="img/icn_find.png" alt=""> -->
 					</div>
 				</div>
-				<div class="package-food" v-if="p2Show">牛排套餐 <span class="package-price">¥58</span></div>
+				<div class="package-food" v-if="p2Show">{{packName}} <span class="package-price">¥{{packPrice}}</span></div>
 				<div class="food-box">
-					<div class="foot-names" v-for="(allfood,allfoodIndex) in allProductList" v-if="allfoodIndex==pageNum">
-						<div class="big-type" v-if="p2Show">
+					<!--单品点餐-->
+					<div class="foot-names" v-if="p1Show" v-for="(allfood,allfoodIndex) in allProductList" v-if="allfoodIndex==pageNum">
+						<!--<div class="big-type" v-if="p2Show">
 							主菜 1/1
-						</div>
-						<div class="food-name" v-for='(food,foodIndex) in allfood.shop_product' @click="selectfood(allfoodIndex,foodIndex)">
+						</div>-->
+						<div :aaa="111" class="food-name" v-for='(food,foodIndex) in allfood.shop_product' @click="selectfood(allfoodIndex,foodIndex)">
 							{{food.product_name}}
 							<div class="price">¥{{food.price}}</div>
 							<span class='badge' v-if="food.num>0">{{food.num}}</span>
 						</div>
-						<!--  <div class="food-name">
-                        水煮鱼
-                        <div class="price">¥50</div>
-                        <span class='badge'>1</span>
-                    </div> -->
 					</div>
+					<!--套餐点餐-->
+					<div class="foot-names" v-if="p2Show" v-for="(packFood,packAllfoodIndex) in packAllProductList">
+						<div class="big-type">
+							{{packFood.title}} 1/1
+						</div>
+						<div :aaa="222" class="food-name" v-for='(sitefood,foodIndex) in packFood.site_product_accessory' @click="selectfood(allfoodIndex,foodIndex)">
+							{{sitefood.accessory_name}}
+							<div class="price">¥{{sitefood.price}}</div>
+							<span class='badge' v-if="sitefood.num>0">{{food.num}}</span>
+						</div>
+					</div>
+
 				</div>
 				<div class="food-taste hide">
 					<div class="guige">

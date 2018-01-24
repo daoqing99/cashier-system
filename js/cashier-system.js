@@ -22,7 +22,8 @@ var cashierSystemContainer = new Vue({
 		packAllProductList: [], //套餐内所有产品
 		shopProductList: [], //单品点餐
 		packProductList: [], //套餐点餐
-		//		siteProductPackList: [],
+		packName: '', //套餐名称
+		packPrice: '', //套餐价格
 		tempArr: []
 	},
 	mounted: function() {
@@ -34,7 +35,7 @@ var cashierSystemContainer = new Vue({
 			}).then(function(res) {
 				if(res.data.code == "success") {
 
-//					console.log(JSON.stringify(res.data.data));
+					console.log(JSON.stringify(res.data.data));
 
 					that.allProductList = res.data.data;
 
@@ -51,9 +52,11 @@ var cashierSystemContainer = new Vue({
 	},
 	methods: {
 		selectfood: function(allfoodIndex, foodIndex) {
-			var foodData = cashierSystemContainer.allProductList[allfoodIndex].shop_product[foodIndex];
 			var isPackage = cashierSystemContainer.allProductList[allfoodIndex].shop_product[foodIndex].site_product_pack.length;
+			//	alert(isPackage)
 
+			cashierSystemContainer.packName = cashierSystemContainer.allProductList[allfoodIndex].shop_product[foodIndex].product_name;
+			cashierSystemContainer.packPrice = cashierSystemContainer.allProductList[allfoodIndex].shop_product[foodIndex].price;
 			if(isPackage > 0) {
 				//			套餐
 				this.p1Show = false;
@@ -61,8 +64,10 @@ var cashierSystemContainer = new Vue({
 				this.p2Show = true;
 
 				cashierSystemContainer.packAllProductList = cashierSystemContainer.allProductList[allfoodIndex].shop_product[foodIndex].site_product_pack;
-				console.log(cashierSystemContainer.packProductList)
+				console.log(cashierSystemContainer.packAllProductList)
 			} else {
+
+				var foodData = cashierSystemContainer.allProductList[allfoodIndex].shop_product[foodIndex];
 				//				单品
 				cashierSystemContainer.allProductList[allfoodIndex].shop_product[foodIndex].num++;
 
