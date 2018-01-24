@@ -136,7 +136,7 @@
 				<div class="package-food" v-if="p2Show">{{packName}} <span class="package-price">¥{{packPrice}}</span></div>
 				<div class="food-box">
 					<!--单品点餐-->
-					<div class="foot-names" v-if="p1Show" v-for="(allfood,allfoodIndex) in allProductList" v-if="allfoodIndex==pageNum">
+					<div class="foot-names"  v-for="(allfood,allfoodIndex) in allProductList" v-if="p1Show && allfoodIndex==pageNum">
 						<!--<div class="big-type" v-if="p2Show">
 							主菜 1/1
 						</div>-->
