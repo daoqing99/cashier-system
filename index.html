@@ -64,31 +64,31 @@
 							<!--{{food}}-->
 							<div class="food-name">{{food.product_name}}</div>
 							<div class="price">
-								<span class="yuanjia">¥{{food.site_price}} </span> <span class="xianjia">¥{{food.price}}</span>
+								<span class="yuanjia">¥{{food.price}} </span> <span class="xianjia">¥{{food.price}}</span>
 							</div>
 						</div>
 						<div class="food-num">
-							<img src="img/btn_minus.png" alt="" @click="minus(foodIndex)">
+							<img src="img/btn_minus.png" alt="" @click="minus(foodIndex,1)">
 							<input v-model="food.num" type="text">
-							<!--<span>{{food.num}}</span>-->
-							<img src="img/btn_plus.png" alt="" @click="add(foodIndex)">
+						
+							<img src="img/btn_plus.png" alt="" @click="add(foodIndex,1)">
 						</div>
 					</div>
 
 					<!--套餐点餐-->
 					<div class="food-item" v-if="p2Show" v-for="(food,foodIndex) in packProductList">
 						<div class="food-content">
-							<!--{{food}}-->
-							<div class="food-name">{{food.product_name}}</div>
+						
+							<div class="food-name">{{food.accessory_name}}</div>
 							<div class="price">
-								<span class="yuanjia">¥{{food.site_price}} </span> <span class="xianjia">¥{{food.price}}</span>
+								<span class="yuanjia">¥{{food.price}} </span> <span class="xianjia">¥{{food.price}}</span>
 							</div>
 						</div>
 						<div class="food-num">
-							<img src="img/btn_minus.png" alt="" @click="minus(foodIndex)">
+							<img src="img/btn_minus.png" alt="" @click="minus(foodIndex,2)">
 							<input v-model="food.num" type="text">
 							<!--<span>{{food.num}}</span>-->
-							<img src="img/btn_plus.png" alt="" @click="add(foodIndex)">
+							<img src="img/btn_plus.png" alt="" @click="add(foodIndex,2)">
 						</div>
 					</div>
 				</div>
@@ -96,7 +96,7 @@
 					<div class="nums">
 						<div v-if="p1Show">
 							<span class="total">共{{totalNumber()}}份</span>
-							<span class="heji">合计¥{{totalPrice()}}</span>
+							<span class="heji">合计¥{{totalPrice(1)}}</span>
 						</div>
 						<div class="youhui" v-if="p1Show">优惠 ¥{{promotionPrice()}}</div>
 						<div class="info" v-if="p1Show">
@@ -106,15 +106,15 @@
 							</div>
 							<span class="shishou">实收 ¥{{finalPrice()}}</span>
 						</div>
-						<div class="shishou2" v-if="p2Show">合计¥100</div>
+						<div class="shishou2" v-if="p2Show">合计¥{{totalPrice(2)}}</div>
 					</div>
-					<div class="btns hide">
-						<div class="clear">清空</div>
+					<div class="btns" v-if="p1Show">
+						<div class="clear" @click="clearSelected(1)">清空</div>
 						<div class="pay">后付</div>
 						<div class="checkout">结算</div>
 					</div>
-					<div class="btns ">
-						<div class="clear2">清空</div>
+					<div class="btns" v-if="p2Show">
+						<div class="clear2" @click="clearSelected(2)">清空</div>
 						<div class="checkout2">确认</div>
 					</div>
 				</div>
@@ -140,7 +140,7 @@
 						<!--<div class="big-type" v-if="p2Show">
 							主菜 1/1
 						</div>-->
-						<div :aaa="111" class="food-name" v-for='(food,foodIndex) in allfood.shop_product' @click="selectfood(allfoodIndex,foodIndex)">
+						<div :aaa="111" class="food-name" v-for='(food,foodIndex) in allfood.shop_product' @click="selectfood(allfoodIndex,foodIndex,1)">
 							{{food.product_name}}
 							<div class="price">¥{{food.price}}</div>
 							<span class='badge' v-if="food.num>0">{{food.num}}</span>
@@ -151,10 +151,10 @@
 						<div class="big-type">
 							{{packFood.title}} 1/1
 						</div>
-						<div :aaa="222" class="food-name" v-for='(sitefood,foodIndex) in packFood.site_product_accessory' @click="selectfood(allfoodIndex,foodIndex)">
+						<div :aaa="222" class="food-name" v-for='(sitefood,siteFoodIndex) in packFood.site_product_accessory' @click="selectfood(packAllfoodIndex,siteFoodIndex,2)">
 							{{sitefood.accessory_name}}
 							<div class="price">¥{{sitefood.price}}</div>
-							<span class='badge' v-if="sitefood.num>0">{{food.num}}</span>
+							<span class='badge' v-if="sitefood.num>0">{{sitefood.num}}</span>
 						</div>
 					</div>
 

@@ -51,42 +51,68 @@ var cashierSystemContainer = new Vue({
 
 	},
 	methods: {
-		selectfood: function(allfoodIndex, foodIndex) {
-			var isPackage = cashierSystemContainer.allProductList[allfoodIndex].shop_product[foodIndex].site_product_pack.length;
-			//	alert(isPackage)
+		selectfood: function(allIndex, foodIndex, type) {
+			//			套餐
+			if(type == 2) {
+				var packData = cashierSystemContainer.packAllProductList[allIndex].site_product_accessory[foodIndex];
+				console.log(packData)
+				cashierSystemContainer.packAllProductList[allIndex].site_product_accessory[foodIndex].num++;
 
-			cashierSystemContainer.packName = cashierSystemContainer.allProductList[allfoodIndex].shop_product[foodIndex].product_name;
-			cashierSystemContainer.packPrice = cashierSystemContainer.allProductList[allfoodIndex].shop_product[foodIndex].price;
-			if(isPackage > 0) {
-				//			套餐
-				this.p1Show = false;
-				this.p1ShowChild = true;
-				this.p2Show = true;
+				//				去重
 
-				cashierSystemContainer.packAllProductList = cashierSystemContainer.allProductList[allfoodIndex].shop_product[foodIndex].site_product_pack;
-				console.log(cashierSystemContainer.packAllProductList)
-			} else {
+				var lock = 0;
+				for(var i = 0; i < cashierSystemContainer.packProductList.length; i++) {
 
-				var foodData = cashierSystemContainer.allProductList[allfoodIndex].shop_product[foodIndex];
-				//				单品
-				cashierSystemContainer.allProductList[allfoodIndex].shop_product[foodIndex].num++;
-
-				console.log((foodData.productid));
-				var count = 0;
-				for(var i = 0; i < cashierSystemContainer.shopProductList.length; i++) {
-
-					if(cashierSystemContainer.shopProductList[i].productid == foodData.productid) {
-						count++;
+					if(cashierSystemContainer.packProductList[i].accessoryid == packData.accessoryid) {
+						lock++;
 					}
 				};
 
-				console.log(count)
-				if(count == 0) {
+				console.log(lock)
+				if(lock == 0) {
 
-					cashierSystemContainer.shopProductList.push(foodData);
+					cashierSystemContainer.packProductList.push(packData);
 				}
 
 			}
+			//          单品
+			if(type == 1) {
+				var isPackage = cashierSystemContainer.allProductList[allIndex].shop_product[foodIndex].site_product_pack.length;
+
+				cashierSystemContainer.packName = cashierSystemContainer.allProductList[allIndex].shop_product[foodIndex].product_name;
+				cashierSystemContainer.packPrice = cashierSystemContainer.allProductList[allIndex].shop_product[foodIndex].price;
+				if(isPackage > 0) {
+					//			套餐
+					this.p1Show = false;
+					this.p1ShowChild = true;
+					this.p2Show = true;
+
+					cashierSystemContainer.packAllProductList = cashierSystemContainer.allProductList[allIndex].shop_product[foodIndex].site_product_pack;
+					console.log(cashierSystemContainer.packAllProductList);
+
+				} else {
+
+					var foodData = cashierSystemContainer.allProductList[allIndex].shop_product[foodIndex];
+					//				单品
+					cashierSystemContainer.allProductList[allIndex].shop_product[foodIndex].num++;
+
+					console.log((foodData.productid));
+					var count = 0;
+					for(var i = 0; i < cashierSystemContainer.shopProductList.length; i++) {
+
+						if(cashierSystemContainer.shopProductList[i].productid == foodData.productid) {
+							count++;
+						}
+					};
+
+					console.log(count)
+					if(count == 0) {
+
+						cashierSystemContainer.shopProductList.push(foodData);
+					}
+
+				}
+			};
 
 		},
 		foodSwitch: function(index) {
@@ -94,30 +120,61 @@ var cashierSystemContainer = new Vue({
 			this.pageNum = index;
 
 		},
-		add: function(index) {
-			if(this.shopProductList[index].num < 100) {
-				this.shopProductList[index].num++;
+		add: function(index, type) {
+
+			if(type == 1) {
+				if(this.shopProductList[index].num < 100) {
+					this.shopProductList[index].num++;
+					console.log(this.shopProductList[index].num);
+
+				};
+			};
+
+			if(type == 2) {
+				if(this.packProductList[index].num < 100) {
+					this.packProductList[index].num++;
+					console.log(this.packProductList[index].num);
+
+				};
+			};
+
+		},
+		minus: function(index, type) {
+
+			if(type == 1) {
+				if(this.shopProductList[index].num > 0) {
+					this.shopProductList[index].num--;
+				};
+
 				console.log(this.shopProductList[index].num);
 
+				if(this.shopProductList[index].num == 0) {
+
+					setTimeout(function() {
+
+						cashierSystemContainer.shopProductList.splice(index, 1)
+					}, 100)
+
+				}
+
 			};
+			if(type == 2) {
+				if(this.packProductList[index].num > 0) {
+					this.packProductList[index].num--;
+				};
 
-			console.log(this.shopProductList[index])
-		},
-		minus: function(index) {
-			if(this.shopProductList[index].num > 0) {
-				this.shopProductList[index].num--;
+				console.log(this.packProductList[index].num);
+
+				if(this.packProductList[index].num == 0) {
+
+					setTimeout(function() {
+
+						cashierSystemContainer.packProductList.splice(index, 1)
+					}, 100)
+
+				}
+
 			};
-
-			console.log(this.shopProductList[index].num);
-
-			if(this.shopProductList[index].num == 0) {
-
-				setTimeout(function() {
-
-					cashierSystemContainer.shopProductList.splice(index, 1)
-				}, 100)
-
-			}
 		},
 		totalNumber: function() {
 			var totalNum = 0;
@@ -126,17 +183,54 @@ var cashierSystemContainer = new Vue({
 			};
 			return totalNum;
 		},
-		totalPrice: function() {
-			var totalPriceNum = 0;
+		totalPrice: function(type) {
+//套餐总价
+			if(type == 2) {
 
-			for(var j = 0; j < this.shopProductList.length; j++) {
-				totalPriceNum += this.shopProductList[j].site_price * this.shopProductList[j].num;
+				var totalPriceNum = 0;
+
+				for(var j = 0; j < this.packProductList.length; j++) {
+					totalPriceNum += this.packProductList[j].price * this.packProductList[j].num;
+				};
+				//			console.log(totalPriceNum)
+				return totalPriceNum;
+
 			};
-			//			console.log(totalPriceNum)
-			return totalPriceNum;
+
+			if(type == 1) {
+//单品总价
+				var totalPriceNum = 0;
+
+				for(var j = 0; j < this.shopProductList.length; j++) {
+					totalPriceNum += this.shopProductList[j].price * this.shopProductList[j].num;
+				};
+				//			console.log(totalPriceNum)
+				return totalPriceNum;
+
+			};
 
 		},
+		clearSelected: function(type) {
+			
+//			清空套餐
+			if(type == 1) {
+				for(var i = 0; i < this.shopProductList.length; i++) {
+					this.shopProductList[i].num = 0;
+				};
+				this.shopProductList = []; //单品点餐
 
+			};
+//			清空选择的单品
+			if(type == 2) {
+
+				for(var i = 0; i < this.packProductList.length; i++) {
+					this.packProductList[i].num = 0;
+				};
+				this.packProductList = []; //套
+
+			};
+
+		},
 		promotionPrice: function() {
 			var promotionNum = 0;
 
@@ -153,6 +247,10 @@ var cashierSystemContainer = new Vue({
 			};
 			return finalNum;
 
+		},
+//		确认套餐
+		makeSure:function(){
+			
 		}
 
 	}
