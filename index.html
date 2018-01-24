@@ -58,8 +58,9 @@
 					</div>
 				</div>
 				<div class="getfood">
-					<div class="food-item" v-for="(food,foodIndex) in productsList">
+					<div class="food-item" v-for="(food,foodIndex) in shopProductList">
 						<div class="food-content">
+							<!--{{food}}-->
 							<div class="food-name">{{food.product_name}}</div>
 							<div class="price">
 								<span class="yuanjia">¥{{food.site_price}} </span> <span class="xianjia">¥{{food.price}}</span>
@@ -67,7 +68,8 @@
 						</div>
 						<div class="food-num">
 							<img src="img/btn_minus.png" alt="" @click="minus(foodIndex)">
-							<input v-model="food.inventory_amount" type="text">
+							<input v-model="food.num" type="text">
+							<!--<span>{{food.num}}</span>-->
 							<img src="img/btn_plus.png" alt="" @click="add(foodIndex)">
 						</div>
 					</div>
@@ -128,7 +130,7 @@
 						<div class="food-name" v-for='(food,foodIndex) in allfood.shop_product' @click="selectfood(allfoodIndex,foodIndex)">
 							{{food.product_name}}
 							<div class="price">¥{{food.price}}</div>
-							<span class='badge' v-if="food.inventory_amount>0">{{food.inventory_amount}}</span>
+							<span class='badge' v-if="food.num>0">{{food.num}}</span>
 						</div>
 						<!--  <div class="food-name">
                         水煮鱼

@@ -15,23 +15,26 @@ var cashierSystemContainer = new Vue({
 		// p1Show: true,
 		// p1ShowChild: false,
 		// p2Show: false,
-		productsList: [],
+
 		pageNum: 0,
+		//		numbers:1,
 		allProductList: [], //所有产品
-		shopProductList: [],
-		siteProductPackList: []
+		packAllProductList: [], //套餐内所有产品
+		shopProductList: [], //单品点餐
+		packProductList: [], //套餐点餐
+		//		siteProductPackList: [],
+		tempArr: []
 	},
-	created: function() {
+	mounted: function() {
 		var that = this;
 		axios.get('http://icy.iidingyun.com/api/shop/shop_product_cashier_select.vm', {
 				params: {
 					shopid: "65428"
 				}
-			})
-			.then(function(res) {
+			}).then(function(res) {
 				if(res.data.code == "success") {
 
-					// console.log(JSON.stringify(res.data.data));
+//					console.log(JSON.stringify(res.data.data));
 
 					that.allProductList = res.data.data;
 
@@ -47,10 +50,39 @@ var cashierSystemContainer = new Vue({
 
 	},
 	methods: {
-		selectfood:function(allfoodIndex,foodIndex){
-				var foodData=cashierSystemContainer.allProductList[allfoodIndex].shop_product[foodIndex];
-				console.log(foodData)
-				cashierSystemContainer.productsList.push(foodData);
+		selectfood: function(allfoodIndex, foodIndex) {
+			var foodData = cashierSystemContainer.allProductList[allfoodIndex].shop_product[foodIndex];
+			var isPackage = cashierSystemContainer.allProductList[allfoodIndex].shop_product[foodIndex].site_product_pack.length;
+
+			if(isPackage > 0) {
+				//			套餐
+				this.p1Show = false;
+				this.p1ShowChild = true;
+				this.p2Show = true;
+
+				cashierSystemContainer.packAllProductList = cashierSystemContainer.allProductList[allfoodIndex].shop_product[foodIndex].site_product_pack;
+				console.log(cashierSystemContainer.packProductList)
+			} else {
+				//				单品
+				cashierSystemContainer.allProductList[allfoodIndex].shop_product[foodIndex].num++;
+
+				console.log((foodData.productid));
+				var count = 0;
+				for(var i = 0; i < cashierSystemContainer.shopProductList.length; i++) {
+
+					if(cashierSystemContainer.shopProductList[i].productid == foodData.productid) {
+						count++;
+					}
+				};
+
+				console.log(count)
+				if(count == 0) {
+
+					cashierSystemContainer.shopProductList.push(foodData);
+				}
+
+			}
+
 		},
 		foodSwitch: function(index) {
 			console.log(index);
@@ -58,41 +90,44 @@ var cashierSystemContainer = new Vue({
 
 		},
 		add: function(index) {
-			if(this.productsList[index].inventory_amount < 100) {
-				this.productsList[index].inventory_amount++;
+			if(this.shopProductList[index].num < 100) {
+				this.shopProductList[index].num++;
+				console.log(this.shopProductList[index].num);
 
-			}
-		},
-		minus: function(index) {
-			if(this.productsList[index].inventory_amount > 0) {
-				this.productsList[index].inventory_amount--;
 			};
 
-			console.log(this.productsList[index].inventory_amount);
+			console.log(this.shopProductList[index])
+		},
+		minus: function(index) {
+			if(this.shopProductList[index].num > 0) {
+				this.shopProductList[index].num--;
+			};
 
-			if(this.productsList[index].inventory_amount == 0) {
+			console.log(this.shopProductList[index].num);
+
+			if(this.shopProductList[index].num == 0) {
 
 				setTimeout(function() {
 
-					cashierSystemContainer.productsList.splice(index, 1)
-				}, 500)
+					cashierSystemContainer.shopProductList.splice(index, 1)
+				}, 100)
 
 			}
 		},
 		totalNumber: function() {
 			var totalNum = 0;
-			for(var i = 0; i < this.productsList.length; i++) {
-				totalNum += Number(this.productsList[i].inventory_amount);
+			for(var i = 0; i < this.shopProductList.length; i++) {
+				totalNum += this.shopProductList[i].num;
 			};
 			return totalNum;
 		},
 		totalPrice: function() {
 			var totalPriceNum = 0;
 
-			for(var j = 0; j < this.productsList.length; j++) {
-				totalPriceNum += this.productsList[j].site_price * this.productsList[j].inventory_amount;
+			for(var j = 0; j < this.shopProductList.length; j++) {
+				totalPriceNum += this.shopProductList[j].site_price * this.shopProductList[j].num;
 			};
-			console.log(totalPriceNum)
+			//			console.log(totalPriceNum)
 			return totalPriceNum;
 
 		},
@@ -100,16 +135,16 @@ var cashierSystemContainer = new Vue({
 		promotionPrice: function() {
 			var promotionNum = 0;
 
-			for(var m = 0; m < this.productsList.length; m++) {
-				promotionNum += (this.productsList[m].site_price - this.productsList[m].price) * this.productsList[m].inventory_amount;
+			for(var m = 0; m < this.shopProductList.length; m++) {
+				promotionNum += (this.shopProductList[m].site_price - this.shopProductList[m].price) * this.shopProductList[m].num;
 			};
 			return promotionNum;
 
 		},
 		finalPrice: function() {
 			var finalNum = 0;
-			for(var n = 0; n < this.productsList.length; n++) {
-				finalNum += this.productsList[n].price * this.productsList[n].inventory_amount;
+			for(var n = 0; n < this.shopProductList.length; n++) {
+				finalNum += this.shopProductList[n].price * this.shopProductList[n].num;
 			};
 			return finalNum;
 
