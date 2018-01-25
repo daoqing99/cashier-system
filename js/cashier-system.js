@@ -24,10 +24,13 @@ var cashierSystemContainer = new Vue({
 		packProductList: [], //套餐点餐
 		packName: '', //套餐名称
 		packPrice: '', //套餐价格
+		totalPackPrice:'',//选定套餐后价格
 		tempArr: []
 	},
 	mounted: function() {
 		var that = this;
+		
+//		产品接口
 		axios.get('http://icy.iidingyun.com/api/shop/shop_product_cashier_select.vm', {
 				params: {
 					shopid: "65428"
@@ -35,11 +38,52 @@ var cashierSystemContainer = new Vue({
 			}).then(function(res) {
 				if(res.data.code == "success") {
 
-					console.log(JSON.stringify(res.data.data));
+//					console.log(JSON.stringify(res.data.data));
 
 					that.allProductList = res.data.data;
 
-					console.log("allProductList:", that.allProductList);
+//					console.log("allProductList:", that.allProductList);
+
+				} else {
+					console.log(res.data.msg);
+				}
+			})
+			.catch(function(error) {
+				console.log(error);
+			});
+			
+//			获取门店支付方式
+
+				axios.post('http://icy.iidingyun.com/api/shop_set/shop_pay_type_list_select.vm', {
+				
+					shopid: "65428"
+				
+			}).then(function(res) {
+				console.log(JSON.stringify(res.data));
+				if(res.data.code == "success") {
+
+				} else {
+					console.log(res.data.msg);
+				}
+			})
+			.catch(function(error) {
+				console.log(error);
+			});
+			
+//			下单接口
+
+		axios.post('http://icy.iidingyun.com/api/order/create_order.vm', {
+				
+					shopid: "25628"
+				
+			}).then(function(res) {
+				console.log(JSON.stringify(res.data));
+				if(res.data.code == "success") {
+
+
+//					that.allProductList = res.data.data;
+
+//					console.log("allProductList:", that.allProductList);
 
 				} else {
 					console.log(res.data.msg);
@@ -49,13 +93,17 @@ var cashierSystemContainer = new Vue({
 				console.log(error);
 			});
 
+
 	},
 	methods: {
 		selectfood: function(allIndex, foodIndex, type) {
 			//			套餐
 			if(type == 2) {
 				var packData = cashierSystemContainer.packAllProductList[allIndex].site_product_accessory[foodIndex];
-				console.log(packData)
+				console.log(packData);
+				
+				console.log(cashierSystemContainer.packAllProductList[allIndex])
+				
 				cashierSystemContainer.packAllProductList[allIndex].site_product_accessory[foodIndex].num++;
 
 				//				去重
@@ -184,7 +232,7 @@ var cashierSystemContainer = new Vue({
 			return totalNum;
 		},
 		totalPrice: function(type) {
-//套餐总价
+			//套餐总价
 			if(type == 2) {
 
 				var totalPriceNum = 0;
@@ -193,12 +241,14 @@ var cashierSystemContainer = new Vue({
 					totalPriceNum += this.packProductList[j].price * this.packProductList[j].num;
 				};
 				//			console.log(totalPriceNum)
+				
+				this.totalPackPrice=totalPriceNum;
 				return totalPriceNum;
 
 			};
 
 			if(type == 1) {
-//单品总价
+				//单品总价
 				var totalPriceNum = 0;
 
 				for(var j = 0; j < this.shopProductList.length; j++) {
@@ -211,8 +261,8 @@ var cashierSystemContainer = new Vue({
 
 		},
 		clearSelected: function(type) {
-			
-//			清空套餐
+
+			//			清空套餐
 			if(type == 1) {
 				for(var i = 0; i < this.shopProductList.length; i++) {
 					this.shopProductList[i].num = 0;
@@ -220,7 +270,7 @@ var cashierSystemContainer = new Vue({
 				this.shopProductList = []; //单品点餐
 
 			};
-//			清空选择的单品
+			//			清空选择的单品
 			if(type == 2) {
 
 				for(var i = 0; i < this.packProductList.length; i++) {
@@ -235,7 +285,7 @@ var cashierSystemContainer = new Vue({
 			var promotionNum = 0;
 
 			for(var m = 0; m < this.shopProductList.length; m++) {
-				promotionNum += (this.shopProductList[m].site_price - this.shopProductList[m].price) * this.shopProductList[m].num;
+				promotionNum += (this.shopProductList[m].price - this.shopProductList[m].price) * this.shopProductList[m].num;
 			};
 			return promotionNum;
 
@@ -248,9 +298,26 @@ var cashierSystemContainer = new Vue({
 			return finalNum;
 
 		},
-//		确认套餐
-		makeSure:function(){
+		//		确认套餐
+		packMakeSure: function() {
+			this.shopProductList.push({
+				product_name:this.packName,
+				price:this.totalPackPrice,
+				num:1,
+				site_product_accessory:this.packProductList
+				
+			});
 			
+			
+			this.p1Show = true;
+			this.p1ShowChild = true;
+			this.p2Show = false;
+		},
+		//		结算
+		finalCheckOut: function() {
+			this.p1Show = true;
+			this.p1ShowChild = false;
+			this.p2Show = false;
 		}
 
 	}

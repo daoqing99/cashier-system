@@ -73,6 +73,13 @@
 						
 							<img src="img/btn_plus.png" alt="" @click="add(foodIndex,1)">
 						</div>
+						<!--套餐显示-->
+						<div class="pack-item" v-for="packFood in food.site_product_accessory">
+							<div>{{packFood.accessory_name}} <span class="xianjia">¥ {{packFood.price}}</span></div>
+							<!--<div>白灼秋葵 <span class="xianjia">¥ 58</span></div>-->
+							<!--<div>白灼秋葵 <span class="xianjia">¥ 58</span></div>-->
+							
+						</div>
 					</div>
 
 					<!--套餐点餐-->
@@ -111,11 +118,11 @@
 					<div class="btns" v-if="p1Show">
 						<div class="clear" @click="clearSelected(1)">清空</div>
 						<div class="pay">后付</div>
-						<div class="checkout">结算</div>
+						<div class="checkout" @click="finalCheckOut">结算</div>
 					</div>
 					<div class="btns" v-if="p2Show">
 						<div class="clear2" @click="clearSelected(2)">清空</div>
-						<div class="checkout2">确认</div>
+						<div class="checkout2" @click="packMakeSure">确认</div>
 					</div>
 				</div>
 			</div>
@@ -244,12 +251,12 @@
 					<div class="payway-select">
 						<div>
 							<div class="money">
-								<span>合计¥154</span>
+								<span>合计¥{{totalPrice(1)}}</span>
 								<span>优惠
-                                <span class="colorred">¥ 50</span>
+                                <span class="colorred">¥ {{promotionPrice()}}</span>
 								</span>
 								<span>实收
-                                <span class="colorred">¥ 100</span>
+                                <span class="colorred">¥ {{finalPrice()}}</span>
 								</span>
 							</div>
 							<ul>

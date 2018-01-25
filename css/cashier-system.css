@@ -168,7 +168,7 @@ dd {
 }
 
 .getfood {
-    padding-left: 14px;
+
     padding-right: 14px;
     color: #000;
     font-size: 14px;
@@ -179,12 +179,18 @@ dd {
 }
 
 .getfood .food-item {
-    height: 58px;
+    /*height: 58px;*/
     border-bottom: 1px solid #e5e5e5;
     line-height: 58px;
     overflow: hidden;
+        text-indent: 14px;
 }
-
+.getfood .food-item .pack-item{
+	font-size:12px;width: 100%;clear: both;border-top: 1px solid #E5E5E5;padding-top:8px;background-color: #E5E5E5;
+}
+.getfood .food-item .pack-item>div{
+	border-bottom:1px dashed #fff;
+}
 .getfood .food-item .food-content {
     line-height: 29px;
     float: left;
