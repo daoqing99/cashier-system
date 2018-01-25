@@ -406,14 +406,14 @@ var cashierSystemContainer = new Vue({
 //				console.log(tempOrderProduct[i].site_product_accessory.length);
 				
 				if(tempOrderProduct[i].site_product_accessory) {
-					tempProductName=tempOrderProduct[i].product_name;
+					tempProductName=tempOrderProduct[i].product_name+"+";
 					for(var m = 0; m < tempOrderProduct[i].site_product_accessory.length; m++) {
-						tempProductName +="+"+tempOrderProduct[i].site_product_accessory[m].accessory_name;
+						tempProductName +=tempOrderProduct[i].site_product_accessory[m].accessory_name+" ";
 					};
 
 					orderProduct.push({
 						'buyerName': '',
-						'createTime': '',
+//						'createTime': '',
 						'productid': tempOrderProduct[i].site_product_accessory[0].productid,
 						'price': tempOrderProduct[i].price,
 						'productCount': tempOrderProduct[i].num,
@@ -424,7 +424,7 @@ var cashierSystemContainer = new Vue({
 				} else {
 					orderProduct.push({
 						'buyerName': '',
-						'createTime': '',
+//						'createTime': '',
 						'productid': tempOrderProduct[i].productid,
 						'price': tempOrderProduct[i].price,
 						'productCount': tempOrderProduct[i].num,
@@ -478,7 +478,7 @@ var cashierSystemContainer = new Vue({
 					"ticketNo": ""
 				}]
 			};
-			console.log(payData);
+			console.log(JSON.stringify(payData));
 			//			下单接口
 
 			axios.post('http://icy.iidingyun.com/api/order/create_order.vm', payData).then(function(res) {
