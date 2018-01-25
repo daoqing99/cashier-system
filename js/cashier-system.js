@@ -104,28 +104,6 @@ var cashierSystemContainer = new Vue({
 				console.log(error);
 			});
 
-		//			下单接口
-
-		axios.post('http://icy.iidingyun.com/api/order/create_order.vm', {
-
-				shopid: "25628"
-
-			}).then(function(res) {
-				console.log(JSON.stringify(res.data));
-				if(res.data.code == "success") {
-
-					//					that.allProductList = res.data.data;
-
-					//					console.log("allProductList:", that.allProductList);
-
-				} else {
-					console.log(res.data.msg);
-				}
-			})
-			.catch(function(error) {
-				console.log(error);
-			});
-
 	},
 	methods: {
 		selectfood: function(allIndex, foodIndex, type) {
@@ -189,6 +167,8 @@ var cashierSystemContainer = new Vue({
 					if(count == 0) {
 
 						cashierSystemContainer.shopProductList.push(foodData);
+
+						console.log(cashierSystemContainer.shopProductList)
 					}
 
 				}
@@ -349,6 +329,8 @@ var cashierSystemContainer = new Vue({
 			this.p1Show = true;
 			this.p1ShowChild = false;
 			this.p2Show = false;
+
+			console.log(JSON.stringify(cashierSystemContainer.shopProductList))
 		},
 		//选择支付方式
 		selectPayWay: function(index) {
@@ -372,34 +354,34 @@ var cashierSystemContainer = new Vue({
 			var mobile = this.memberMsgList.mobile;
 			var cardno = this.memberMsgList.cardno;
 			var user_name = this.memberMsgList.user_name;
-			var shopid=65428;
-			var data={
-					user_name: user_name,
-					policyid: "",
-					market_policyid: '',
-					account_status: '',
-					last_msg_date: '',
-					msg_times: '',
-					buyer_type: 0,
-					site_buyer_type: '',
-					login_times: '',
-					barcode: '',
-					level: 1,
-					wx_openid: '',
-					//shopid: shopid,
-					password: '',
-					mobile: mobile,
-					cardno: cardno,
-					referee: '',
-					alipay_openid: ''
+			var shopid = 65428;
+			var data = {
+				user_name: user_name,
+				policyid: "",
+				market_policyid: '',
+				account_status: '',
+				last_msg_date: '',
+				msg_times: '',
+				buyer_type: 0,
+				site_buyer_type: '',
+				login_times: '',
+				barcode: '',
+				level: 1,
+				wx_openid: '',
+				//shopid: shopid,
+				password: '',
+				mobile: mobile,
+				cardno: cardno,
+				referee: '',
+				alipay_openid: ''
 
 			};
-			
+
 			console.log(data);
 
 			axios.post('http://icy.iidingyun.com/api/member/site_buyer_create.vm', data).then(function(res) {
 					console.log(res.data)
-					
+
 					if(res.data.code == "success") {
 
 						console.log(JSON.stringify(res.data.data));
@@ -411,6 +393,106 @@ var cashierSystemContainer = new Vue({
 				.catch(function(error) {
 					console.log(error);
 				});
+		},
+		//		选择堂食时结算支付
+		payMoneyCheckOut: function() {
+
+			var orderProduct = [];
+			var tempOrderProduct = cashierSystemContainer.shopProductList;
+			console.log(tempOrderProduct)
+			var tempProductName = '';
+			for(var i = 0; i < tempOrderProduct.length; i++) {
+
+//				console.log(tempOrderProduct[i].site_product_accessory.length);
+				
+				if(tempOrderProduct[i].site_product_accessory) {
+					tempProductName=tempOrderProduct[i].product_name;
+					for(var m = 0; m < tempOrderProduct[i].site_product_accessory.length; m++) {
+						tempProductName +="+"+tempOrderProduct[i].site_product_accessory[m].accessory_name;
+					};
+
+					orderProduct.push({
+						'buyerName': '',
+						'createTime': '',
+						'productid': tempOrderProduct[i].site_product_accessory[0].productid,
+						'price': tempOrderProduct[i].price,
+						'productCount': tempOrderProduct[i].num,
+						'productStatus': "confirmed",
+						'productName': tempProductName
+					});
+
+				} else {
+					orderProduct.push({
+						'buyerName': '',
+						'createTime': '',
+						'productid': tempOrderProduct[i].productid,
+						'price': tempOrderProduct[i].price,
+						'productCount': tempOrderProduct[i].num,
+						'productStatus': "confirmed",
+						'productName': tempOrderProduct[i].product_name
+					});
+
+				}
+
+			}
+
+			var payData = {
+				"arrivalTime": "2018-01-24 12:47:58",
+				"barcode": this.memberMsgList.barcode,
+				"buyerName": this.memberMsgList.user_name,
+				"buyerRemark": "",
+				"createTime": "2018-01-24 12:02:58",
+				"deliveryBuilding": "3",
+				"deliveryDetailPlace": "",
+				"displayArrivalTime": "2018-01-24 12:02:47",
+				"displayScore": "0.0",
+				"groupid": 0,
+				"ip": "",
+				"lockStatus": "",
+				"mobile": this.memberMsgList.mobile,
+				"operator": "",
+				"payWay": "comp",
+				"orderWay": "self_canteen",
+				"shopOrderid": "self_canteen",
+				"persons": "1",
+				"phone": "13809897810",
+				"points": 0,
+				"receive": 0,
+				"serviceFee": "0",
+				"serviceQuality": null,
+				"shopid": "65428",
+				"shopName": "新餐饮",
+				"siteid": "49071",
+				"smsConfirmation": false,
+				"takenoid": 0,
+				"terminalDevice": "mobile",
+				"ticketNo": "",
+				"totalFee": this.finalPrice(),
+				"discount": 0,
+				"score": 0,
+				"orderStatus": "ORDER_COMPLETED",
+				"orderProduct": orderProduct,
+				"payList": [{
+					"payAmount": this.finalPrice(),
+					"payType": -2,
+					"ticketNo": ""
+				}]
+			};
+			console.log(payData);
+			//			下单接口
+
+			axios.post('http://icy.iidingyun.com/api/order/create_order.vm', payData).then(function(res) {
+					console.log(JSON.stringify(res.data));
+					if(res.data.code == "success") {
+
+					} else {
+						console.log(res.data.msg);
+					}
+				})
+				.catch(function(error) {
+					console.log(error);
+				});
+
 		}
 
 	}

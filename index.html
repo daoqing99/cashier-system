@@ -194,7 +194,7 @@
 				<div class="shouyin-way">
 					<div class="payway">
 						<ul>
-							<li v-for="(pay,payIndex) in getPayWayList" v-if="(pay.pay_type_code || pay.type_name)" :typeid="pay.typeid" :shopid="pay.shopid" :class="{active3:payWayIndex==payIndex}" @click="selectPayWay(payIndex)">{{pay.type_name}}</li>
+							<li v-for="(pay,payIndex) in getPayWayList" v-if="pay.pay_type_code || pay.type_name" :typeid="pay.typeid" :shopid="pay.shopid" :class="{active3:payWayIndex==payIndex}" @click="selectPayWay(payIndex)">{{pay.type_name}}</li>
 							<!--<li>银联卡</li>
 							<li>口碑</li>
 							<li>储蓄卡</li>
@@ -301,7 +301,7 @@
 					扫码
 					<input type="text">
 					<div class="btns">
-						<button class="tangshi">堂食</button>
+						<button class="tangshi" @click="payMoneyCheckOut()">堂食</button>
 						<button class="ziqu">自取</button>
 						<button class="fanhui">返回</button>
 					</div>
