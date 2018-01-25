@@ -573,8 +573,14 @@ dd {
     font-size: 16px;
 
     line-height: 42px;
+
+   
 }
 
+ input{
+         outline: medium;
+    border: none;
+}
 .shouyin-container .shouyin-way .member .btn {
     padding-top: 10px;
     border-bottom: none;
@@ -671,7 +677,7 @@ dd {
 .shouyin-container .calc .payway-select ul li input:focus {
     height: 30px;
     border: none;
-    width: 62%;
+    width: 67%;
     outline: medium;
     color: #f00;
 }
@@ -686,6 +692,7 @@ dd {
 
 .shouyin-container .calc .payway-select ul li img {
     vertical-align: middle;
+    margin-left: -16px;
 }
 
 .shouyin-container .calc .payway-select,
@@ -719,6 +726,7 @@ dd {
     font-weight: bold;
     box-shadow: 0 4px 5px #d3d3d3;
     border-radius: 8px;
+    cursor: pointer;
 }
 
 .shouyin-container .calc .keybord ul li img {

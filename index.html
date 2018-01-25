@@ -194,7 +194,7 @@
 				<div class="shouyin-way">
 					<div class="payway">
 						<ul>
-							<li v-for="(pay,payIndex) in getPayWayList" v-if="!(pay.pay_type_code && pay.type_name)" :typeid="pay.typeid" :shopid="pay.shopid" :class="{active3:payWayIndex==payIndex}" @click="selectPayWay(payIndex)">{{pay.type_name}}</li>
+							<li v-for="(pay,payIndex) in getPayWayList" v-if="(pay.pay_type_code || pay.type_name)" :typeid="pay.typeid" :shopid="pay.shopid" :class="{active3:payWayIndex==payIndex}" @click="selectPayWay(payIndex)">{{pay.type_name}}</li>
 							<!--<li>银联卡</li>
 							<li>口碑</li>
 							<li>储蓄卡</li>
@@ -209,13 +209,13 @@
 							<li>闪惠</li>
 							<li>闪惠</li>-->
 						</ul>
-						<ul>
+						<!--<ul>
 							<li :class="{active3:payMoneyIndex==moneyIndex}" v-for="(money,moneyIndex) in payMoneyList" @click="selectMoney(moneyIndex)">¥ {{money}}</li>
-							<!--<li>¥ 30</li>
+							<li>¥ 30</li>
 							<li>¥ 20</li>
 							<li>¥ 10</li>
-							<li>¥ 5</li>-->
-						</ul>
+							<li>¥ 5</li>
+						</ul>-->
 						<ul>
 							<li class="coupons active3">优惠券1
 								<br> 优惠券1</li>
@@ -235,14 +235,16 @@
 					</div>
 					<ul class="member">
 						<li>会员</li>
-						<li>姓名：Quebec <span>余额：¥50</span></li>
-						<li>会员号：123456677</li>
-						<li>卡号：</li>
+						<li>姓名： <input v-model="memberMsgList.user_name" type="text" /> 
+							<!--<span>余额：¥50</span>-->
+						</li>
+						<li>会员号：{{memberMsgList.userid}}</li>
+						<li>卡号：<input v-model="memberMsgList.cardno" type="text" /></li>
 						<li>预存：</li>
-						<li>电话：15821457584</li>
+						<li>电话： <input v-model='memberMsgList.mobile' type="text" name="" id="" value="" /></li>
 						<li class="btn">
 							<button>注销</button>
-							<button>开户</button>
+							<button @click="openAnAccount()">开户</button>
 							<button class="active3">充值</button>
 						</li>
 					</ul>
@@ -278,7 +280,7 @@
 					</div>
 					<div class="keybord">
 						<ul>
-							<li>7</li>
+							<!--<li>7</li>
 							<li>8</li>
 							<li>9</li>
 							<li>4</li>
@@ -289,9 +291,9 @@
 							<li>3</li>
 							<li>0</li>
 							<li>00</li>
-							<li>.</li>
-							<li><img src="img/keyboard_icn_eliminate_normal.png" alt=""></li>
-							<li class="huilv">货币汇率</li>
+							<li>.</li>-->
+							<!--<li><img src="img/keyboard_icn_eliminate_normal.png" alt=""></li>-->
+							<li :class="{huilv:numIndex==13}" v-for="(num,numIndex) in keyBoardNumList" v-html="num" @click="selectNums(numIndex)"></li>
 						</ul>
 					</div>
 				</div>

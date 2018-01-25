@@ -16,10 +16,11 @@ var cashierSystemContainer = new Vue({
 		// p1ShowChild: false,
 		// p2Show: false,
 
-		pageNum: 0,//菜品默认选择
-		payWayIndex:0,//默认支付方式选择
-		payMoneyIndex:0,//默认面额选择
-		payMoneyList:["50","30","20","10","5"],
+		pageNum: 0, //菜品默认选择
+		payWayIndex: 0, //默认支付方式选择
+		keyBoardNumList: ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', '00', '.', '<img src="img/keyboard_icn_eliminate_normal.png">', '货币汇率'],
+		//		payMoneyIndex: 0, //默认面额选择
+		//		payMoneyList: ["50", "30", "20", "10", "5"],
 		//		numbers:1,
 		allProductList: [], //所有产品
 		packAllProductList: [], //套餐内所有产品
@@ -27,14 +28,16 @@ var cashierSystemContainer = new Vue({
 		packProductList: [], //套餐点餐
 		packName: '', //套餐名称
 		packPrice: '', //套餐价格
-		totalPackPrice:'',//选定套餐后价格
+		totalPackPrice: '', //选定套餐后价格
 		tempArr: [],
-		getPayWayList:[]
+		getPayWayList: [],
+		memberMsgList: []
+
 	},
 	mounted: function() {
 		var that = this;
-		
-//		产品接口
+
+		//		产品接口
 		axios.get('http://icy.iidingyun.com/api/shop/shop_product_cashier_select.vm', {
 				params: {
 					shopid: "65428"
@@ -42,11 +45,7 @@ var cashierSystemContainer = new Vue({
 			}).then(function(res) {
 				if(res.data.code == "success") {
 
-//					console.log(JSON.stringify(res.data.data));
-
 					that.allProductList = res.data.data;
-
-//					console.log("allProductList:", that.allProductList);
 
 				} else {
 					console.log(res.data.msg);
@@ -55,18 +54,48 @@ var cashierSystemContainer = new Vue({
 			.catch(function(error) {
 				console.log(error);
 			});
-			
-//			获取门店支付方式
 
-				axios.post('http://icy.iidingyun.com/api/shop_set/shop_pay_type_list_select.vm', {
-				
-					shopid: "65428"
-				
+		//		会员查询接口
+		axios.get('http://icy.iidingyun.com/api/site_buyer_select.vm', {
+				params: {
+					userid: "",
+					barcode: "000001",
+					mobile: '',
+					userName: '',
+					buyerType: '',
+					siteBuyerType: '',
+					accountStatus: '',
+					createBeginDate: '',
+					createEndDate: '',
+					updateBeginDate: '',
+					updateEndDate: ''
+				}
+			}).then(function(res) {
+
+				if(res.data.code == "success") {
+
+					console.log(res.data.data)
+					cashierSystemContainer.memberMsgList = res.data.data[0];
+
+				} else {
+					console.log(res.data.msg);
+				}
+			})
+			.catch(function(error) {
+				console.log(error);
+			});
+
+		//			获取门店支付方式
+
+		axios.post('http://icy.iidingyun.com/api/shop_set/shop_pay_type_list_select.vm', {
+
+				shopid: "65428"
+
 			}).then(function(res) {
 				if(res.data.code == "success") {
 
 					console.log(JSON.stringify(res.data.data));
-					cashierSystemContainer.getPayWayList=res.data.data;
+					cashierSystemContainer.getPayWayList = res.data.data;
 				} else {
 					console.log(res.data.msg);
 				}
@@ -74,21 +103,20 @@ var cashierSystemContainer = new Vue({
 			.catch(function(error) {
 				console.log(error);
 			});
-			
-//			下单接口
+
+		//			下单接口
 
 		axios.post('http://icy.iidingyun.com/api/order/create_order.vm', {
-				
-					shopid: "25628"
-				
+
+				shopid: "25628"
+
 			}).then(function(res) {
 				console.log(JSON.stringify(res.data));
 				if(res.data.code == "success") {
 
+					//					that.allProductList = res.data.data;
 
-//					that.allProductList = res.data.data;
-
-//					console.log("allProductList:", that.allProductList);
+					//					console.log("allProductList:", that.allProductList);
 
 				} else {
 					console.log(res.data.msg);
@@ -97,7 +125,6 @@ var cashierSystemContainer = new Vue({
 			.catch(function(error) {
 				console.log(error);
 			});
-
 
 	},
 	methods: {
@@ -106,9 +133,9 @@ var cashierSystemContainer = new Vue({
 			if(type == 2) {
 				var packData = cashierSystemContainer.packAllProductList[allIndex].site_product_accessory[foodIndex];
 				console.log(packData);
-				
+
 				console.log(cashierSystemContainer.packAllProductList[allIndex])
-				
+
 				cashierSystemContainer.packAllProductList[allIndex].site_product_accessory[foodIndex].num++;
 
 				//				去重
@@ -246,8 +273,8 @@ var cashierSystemContainer = new Vue({
 					totalPriceNum += this.packProductList[j].price * this.packProductList[j].num;
 				};
 				//			console.log(totalPriceNum)
-				
-				this.totalPackPrice=totalPriceNum;
+
+				this.totalPackPrice = totalPriceNum;
 				return totalPriceNum;
 
 			};
@@ -306,14 +333,13 @@ var cashierSystemContainer = new Vue({
 		//		确认套餐
 		packMakeSure: function() {
 			this.shopProductList.push({
-				product_name:this.packName,
-				price:this.totalPackPrice,
-				num:1,
-				site_product_accessory:this.packProductList
-				
+				product_name: this.packName,
+				price: this.totalPackPrice,
+				num: 1,
+				site_product_accessory: this.packProductList
+
 			});
-			
-			
+
 			this.p1Show = true;
 			this.p1ShowChild = true;
 			this.p2Show = false;
@@ -325,16 +351,66 @@ var cashierSystemContainer = new Vue({
 			this.p2Show = false;
 		},
 		//选择支付方式
-		selectPayWay:function(index){
-			this.payWayIndex=index;
-			var typeid=this.getPayWayList[index].typeid;
+		selectPayWay: function(index) {
+			this.payWayIndex = index;
+			var typeid = this.getPayWayList[index].typeid;
 			console.log(typeid);
 		},
-//		选择充值面额
-		selectMoney:function(index){
-			this.payMoneyIndex=index;
-			var money=this.payMoneyList[index];
-			console.log(money)
+		//		选择充值面额
+		//		selectMoney: function(index) {
+		//			this.payMoneyIndex = index;
+		//			var money = this.payMoneyList[index];
+		//			console.log(money)
+		//		}
+		//	数字键盘
+		selectNums: function(index) {
+			var num = this.keyBoardNumList[index];
+			console.log(num);
+		},
+		openAnAccount: function() {
+
+			var mobile = this.memberMsgList.mobile;
+			var cardno = this.memberMsgList.cardno;
+			var user_name = this.memberMsgList.user_name;
+			var shopid=65428;
+			var data={
+					user_name: user_name,
+					policyid: "",
+					market_policyid: '',
+					account_status: '',
+					last_msg_date: '',
+					msg_times: '',
+					buyer_type: 0,
+					site_buyer_type: '',
+					login_times: '',
+					barcode: '',
+					level: 1,
+					wx_openid: '',
+					//shopid: shopid,
+					password: '',
+					mobile: mobile,
+					cardno: cardno,
+					referee: '',
+					alipay_openid: ''
+
+			};
+			
+			console.log(data);
+
+			axios.post('http://icy.iidingyun.com/api/member/site_buyer_create.vm', data).then(function(res) {
+					console.log(res.data)
+					
+					if(res.data.code == "success") {
+
+						console.log(JSON.stringify(res.data.data));
+
+					} else {
+						console.log(res.data.msg);
+					}
+				})
+				.catch(function(error) {
+					console.log(error);
+				});
 		}
 
 	}
