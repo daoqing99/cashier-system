@@ -16,7 +16,10 @@ var cashierSystemContainer = new Vue({
 		// p1ShowChild: false,
 		// p2Show: false,
 
-		pageNum: 0,
+		pageNum: 0,//菜品默认选择
+		payWayIndex:0,//默认支付方式选择
+		payMoneyIndex:0,//默认面额选择
+		payMoneyList:["50","30","20","10","5"],
 		//		numbers:1,
 		allProductList: [], //所有产品
 		packAllProductList: [], //套餐内所有产品
@@ -25,7 +28,8 @@ var cashierSystemContainer = new Vue({
 		packName: '', //套餐名称
 		packPrice: '', //套餐价格
 		totalPackPrice:'',//选定套餐后价格
-		tempArr: []
+		tempArr: [],
+		getPayWayList:[]
 	},
 	mounted: function() {
 		var that = this;
@@ -59,9 +63,10 @@ var cashierSystemContainer = new Vue({
 					shopid: "65428"
 				
 			}).then(function(res) {
-				console.log(JSON.stringify(res.data));
 				if(res.data.code == "success") {
 
+					console.log(JSON.stringify(res.data.data));
+					cashierSystemContainer.getPayWayList=res.data.data;
 				} else {
 					console.log(res.data.msg);
 				}
@@ -318,6 +323,18 @@ var cashierSystemContainer = new Vue({
 			this.p1Show = true;
 			this.p1ShowChild = false;
 			this.p2Show = false;
+		},
+		//选择支付方式
+		selectPayWay:function(index){
+			this.payWayIndex=index;
+			var typeid=this.getPayWayList[index].typeid;
+			console.log(typeid);
+		},
+//		选择充值面额
+		selectMoney:function(index){
+			this.payMoneyIndex=index;
+			var money=this.payMoneyList[index];
+			console.log(money)
 		}
 
 	}

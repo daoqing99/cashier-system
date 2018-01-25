@@ -109,7 +109,7 @@
 						<div class="info" v-if="p1Show">
 							<div>备注：</div>
 							<div class="content">
-								坦坦荡荡挂号费个地方官丰东股份工服费饿饿
+								
 							</div>
 							<span class="shishou">实收 ¥{{finalPrice()}}</span>
 						</div>
@@ -194,8 +194,8 @@
 				<div class="shouyin-way">
 					<div class="payway">
 						<ul>
-							<li class="active3">现金</li>
-							<li>银联卡</li>
+							<li v-for="(pay,payIndex) in getPayWayList" v-if="!(pay.pay_type_code && pay.type_name)" :typeid="pay.typeid" :shopid="pay.shopid" :class="{active3:payWayIndex==payIndex}" @click="selectPayWay(payIndex)">{{pay.type_name}}</li>
+							<!--<li>银联卡</li>
 							<li>口碑</li>
 							<li>储蓄卡</li>
 							<li>支付宝</li>
@@ -207,14 +207,14 @@
 							<li>支付宝</li>
 							<li>微信</li>
 							<li>闪惠</li>
-							<li>闪惠</li>
+							<li>闪惠</li>-->
 						</ul>
 						<ul>
-							<li class="active3">¥ 50</li>
-							<li>¥ 30</li>
-							<li>¥ 50</li>
-							<li>¥ 50</li>
-							<li>¥ 50</li>
+							<li :class="{active3:payMoneyIndex==moneyIndex}" v-for="(money,moneyIndex) in payMoneyList" @click="selectMoney(moneyIndex)">¥ {{money}}</li>
+							<!--<li>¥ 30</li>
+							<li>¥ 20</li>
+							<li>¥ 10</li>
+							<li>¥ 5</li>-->
 						</ul>
 						<ul>
 							<li class="coupons active3">优惠券1

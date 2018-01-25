@@ -599,6 +599,7 @@ dd {
     width: 28%;
     border-radius: 20px;
     height: 40px;
+    cursor: pointer;
 }
 
 .shouyin-container .shouyin-way .payway ul {
@@ -615,6 +616,7 @@ dd {
     text-align: center;
     line-height: 40px;
     color: #38cecc;
+    cursor: pointer;
 }
 
 .active3 {
