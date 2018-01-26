@@ -32,6 +32,7 @@ dd {
 .contaniner {
     height: 100%;
     overflow: scroll;
+    position: relative;
 }
 
 .system,
@@ -786,4 +787,34 @@ dd {
 .shouyin-container .eat .btns .fanhui {
     background-color: #38cecc;
     color: #fff;
+}
+
+.mask {
+    width: 100%;
+    height: 100%;
+    background: #000000;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: .5;
+    z-index: 999;
+    display: block;
+}
+
+.toast-container{
+
+	position: absolute;
+	bottom: 20%;
+	text-align: center;
+	left: 50%;
+	background-color: #38cecc;
+	color: #fff;
+	border-radius: 15px;
+	width: 200px;
+    height: 50px;
+    line-height: 50px;
+    opacity: 0.8;
+
 }

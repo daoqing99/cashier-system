@@ -27,11 +27,15 @@ var cashierSystemContainer = new Vue({
 		shopProductList: [], //单品点餐
 		packProductList: [], //套餐点餐
 		packName: '', //套餐名称
+		site_product_pack_productid: '',
 		packPrice: '', //套餐价格
 		totalPackPrice: '', //选定套餐后价格
 		tempArr: [],
 		getPayWayList: [],
-		memberMsgList: []
+		memberMsgList: [],
+		isShow: false, //遮罩层设置
+		isShowToast: false, //toast设置
+		toastContent: ''
 
 	},
 	mounted: function() {
@@ -45,6 +49,7 @@ var cashierSystemContainer = new Vue({
 			}).then(function(res) {
 				if(res.data.code == "success") {
 
+					console.log(JSON.stringify(res.data.data))
 					that.allProductList = res.data.data;
 
 				} else {
@@ -114,7 +119,7 @@ var cashierSystemContainer = new Vue({
 
 				console.log(cashierSystemContainer.packAllProductList[allIndex])
 
-				cashierSystemContainer.packAllProductList[allIndex].site_product_accessory[foodIndex].num++;
+				cashierSystemContainer.packAllProductList[allIndex].site_product_accessory[foodIndex].num++; //点产品加数量
 
 				//				去重
 
@@ -138,6 +143,7 @@ var cashierSystemContainer = new Vue({
 				var isPackage = cashierSystemContainer.allProductList[allIndex].shop_product[foodIndex].site_product_pack.length;
 
 				cashierSystemContainer.packName = cashierSystemContainer.allProductList[allIndex].shop_product[foodIndex].product_name;
+				cashierSystemContainer.site_product_pack_productid = cashierSystemContainer.allProductList[allIndex].shop_product[foodIndex].productid;
 				cashierSystemContainer.packPrice = cashierSystemContainer.allProductList[allIndex].shop_product[foodIndex].price;
 				if(isPackage > 0) {
 					//			套餐
@@ -152,7 +158,7 @@ var cashierSystemContainer = new Vue({
 
 					var foodData = cashierSystemContainer.allProductList[allIndex].shop_product[foodIndex];
 					//				单品
-					cashierSystemContainer.allProductList[allIndex].shop_product[foodIndex].num++;
+					cashierSystemContainer.allProductList[allIndex].shop_product[foodIndex].num++; //点产品加数量
 
 					console.log((foodData.productid));
 					var count = 0;
@@ -276,6 +282,7 @@ var cashierSystemContainer = new Vue({
 
 			//			清空套餐
 			if(type == 1) {
+				//				alert(1)
 				for(var i = 0; i < this.shopProductList.length; i++) {
 					this.shopProductList[i].num = 0;
 				};
@@ -312,13 +319,37 @@ var cashierSystemContainer = new Vue({
 		},
 		//		确认套餐
 		packMakeSure: function() {
-			this.shopProductList.push({
-				product_name: this.packName,
-				price: this.totalPackPrice,
-				num: 1,
-				site_product_accessory: this.packProductList
+//toast
+			this.isShowToastFn("text");
+			
+			
+			
+			if(this.packProductList.length > 0) {
+				//--------------------------------------
+				var count = 0;
 
-			});
+				for(var i = 0; i < this.shopProductList.length; i++) {
+
+					if(this.shopProductList[i].productid == this.site_product_pack_productid) {
+						count++;
+					}
+				};
+
+				console.log(count)
+				if(count == 0) {
+					//					------------------------			
+
+					this.shopProductList.push({
+						product_name: this.packName,
+						price: this.totalPackPrice,
+						productid: this.site_product_pack_productid,
+						num: 1,
+						site_product_accessory: this.packProductList
+					});
+
+				}
+
+			}
 
 			this.p1Show = true;
 			this.p1ShowChild = true;
@@ -326,9 +357,14 @@ var cashierSystemContainer = new Vue({
 		},
 		//		结算
 		finalCheckOut: function() {
-			this.p1Show = true;
-			this.p1ShowChild = false;
-			this.p2Show = false;
+
+			if(this.totalNumber() > 0) {
+				this.p1Show = true;
+				this.p1ShowChild = false;
+				this.p2Show = false;
+			} else {
+
+			}
 
 			console.log(JSON.stringify(cashierSystemContainer.shopProductList))
 		},
@@ -403,17 +439,17 @@ var cashierSystemContainer = new Vue({
 			var tempProductName = '';
 			for(var i = 0; i < tempOrderProduct.length; i++) {
 
-//				console.log(tempOrderProduct[i].site_product_accessory.length);
-				
+				//				console.log(tempOrderProduct[i].site_product_accessory.length);
+
 				if(tempOrderProduct[i].site_product_accessory) {
-					tempProductName=tempOrderProduct[i].product_name+"+";
+					tempProductName = tempOrderProduct[i].product_name + "+";
 					for(var m = 0; m < tempOrderProduct[i].site_product_accessory.length; m++) {
-						tempProductName +=tempOrderProduct[i].site_product_accessory[m].accessory_name+" ";
+						tempProductName += tempOrderProduct[i].site_product_accessory[m].accessory_name + " ";
 					};
 
 					orderProduct.push({
 						'buyerName': '',
-//						'createTime': '',
+						//						'createTime': '',
 						'productid': tempOrderProduct[i].site_product_accessory[0].productid,
 						'price': tempOrderProduct[i].price,
 						'productCount': tempOrderProduct[i].num,
@@ -424,7 +460,7 @@ var cashierSystemContainer = new Vue({
 				} else {
 					orderProduct.push({
 						'buyerName': '',
-//						'createTime': '',
+						//						'createTime': '',
 						'productid': tempOrderProduct[i].productid,
 						'price': tempOrderProduct[i].price,
 						'productCount': tempOrderProduct[i].num,
@@ -482,8 +518,24 @@ var cashierSystemContainer = new Vue({
 			//			下单接口
 
 			axios.post('http://icy.iidingyun.com/api/order/create_order.vm', payData).then(function(res) {
-					console.log(JSON.stringify(res.data));
 					if(res.data.code == "success") {
+
+						console.log(JSON.stringify(res.data.print));
+						//					清空单品数据
+						for(var i = 0; i < cashierSystemContainer.shopProductList.length; i++) {
+							cashierSystemContainer.shopProductList[i].num = 0;
+						};
+						cashierSystemContainer.shopProductList = [];
+						//清空套餐数据
+						for(var i = 0; i < cashierSystemContainer.packProductList.length; i++) {
+							cashierSystemContainer.packProductList[i].num = 0;
+						};
+						cashierSystemContainer.packProductList = [];
+
+						//						返回主页
+						cashierSystemContainer.p1Show = true;
+						cashierSystemContainer.p1ShowChild = true;
+						cashierSystemContainer.p2Show = false;
 
 					} else {
 						console.log(res.data.msg);
@@ -493,6 +545,19 @@ var cashierSystemContainer = new Vue({
 					console.log(error);
 				});
 
+		},
+		returnFn: function() {
+			this.p1Show = true;
+			this.p1ShowChild = true;
+			this.p2Show = false;
+		},
+		isShowToastFn: function(content) {
+			cashierSystemContainer.isShowToast = true, //toast设置
+				cashierSystemContainer.toastContent = content;
+			setTimeout(function() {
+
+				cashierSystemContainer.isShowToast = false;
+			}, 1000)
 		}
 
 	}

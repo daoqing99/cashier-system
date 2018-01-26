@@ -156,7 +156,7 @@
 					<!--套餐点餐-->
 					<div class="foot-names" v-if="p2Show" v-for="(packFood,packAllfoodIndex) in packAllProductList">
 						<div class="big-type">
-							{{packFood.title}} 1/1
+							{{packFood.title}} 1/1      最多选{{packFood.max_quantity}}项/最少选{{packFood.min_quantity}}项   
 						</div>
 						<div :aaa="222" class="food-name" v-for='(sitefood,siteFoodIndex) in packFood.site_product_accessory' @click="selectfood(packAllfoodIndex,siteFoodIndex,2)">
 							{{sitefood.accessory_name}}
@@ -303,10 +303,16 @@
 					<div class="btns">
 						<button class="tangshi" @click="payMoneyCheckOut()">堂食</button>
 						<button class="ziqu">自取</button>
-						<button class="fanhui">返回</button>
+						<button class="fanhui" @click="returnFn()">返回</button>
 					</div>
 				</div>
 			</div>
+			<div v-if="isShow" :class="{mask:isShow}"></div>
+            <div class="toast-container" v-if="isShowToast">
+            	
+            		{{toastContent}}
+            
+            </div>
 		</div>
 	</body>
 	<script src="js/vue.js"></script>
