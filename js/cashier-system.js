@@ -136,7 +136,40 @@ var cashierSystemContainer = new Vue({
 
 					cashierSystemContainer.packProductList.push(packData);
 				}
+               	var isTrue=[];
+				//			packAllProductList
+				for(var i = 0; i < this.packAllProductList.length; i++) {
+					
+					var min_quantity = this.packAllProductList[i].min_quantity;
+					var max_quantity = this.packAllProductList[i].max_quantity;
 
+					console.log(this.packAllProductList)
+					console.log(this.packProductList)
+
+					for(var j = 0; j < this.packAllProductList[i].site_product_accessory.length; j++) {
+
+						var tempPackid = this.packAllProductList[i].site_product_accessory[j].packid;
+						//						console.log(tempPackid);
+
+						var temNum = 0;
+
+						for(var m = 0; m < this.packProductList.length; m++) {
+
+							if(this.packProductList[m].packid == tempPackid) {
+								temNum++;
+							}
+
+						};
+
+						if(temNum >= min_quantity && temNum <= max_quantity) {
+								isTrue.push(true);
+						}else{
+							
+							isTrue.push(false);
+						}
+
+					}
+				};
 			}
 			//          单品
 			if(type == 1) {
@@ -386,9 +419,9 @@ console.log(isTrue);
 
 			}
 
-			//			this.p1Show = true;
-			//			this.p1ShowChild = true;
-			//			this.p2Show = false;
+						this.p1Show = true;
+						this.p1ShowChild = true;
+						this.p2Show = false;
 		},
 		//		结算
 		finalCheckOut: function() {

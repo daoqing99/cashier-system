@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<title>划单系统</title>
+		<link rel="stylesheet" href="css/normalize.css">
+		<link rel="stylesheet" href="css/huadan.css"/>
+	</head>
+	<body>
+		<div class="contaniner" id="contaniner">
+			<div class="item bgcolor212">
+				<h3>最近划单</h3>
+				<ul>
+					<li>
+						<div class="text-left font16 color000">5号桌</div>
+						<h3 class="font20 color000 lh30">兰州拉面</h3>
+						<div class="font16 color95">+香菜 +香菜</div>
+						<div class="font16 text-right color000">10分钟</div>
+						<img src="img/icn_yihuadan.png" alt="" />
+					</li>
+					<li>
+						<div class="text-left font16 color000">5号桌</div>
+						<h3 class="font20 color000 lh30">兰州拉面</h3>
+						<div class="font16 color95">+香菜 +香菜</div>
+						<div class="font16 text-right color000">10分钟</div>
+						<img src="img/icn_yihuadan.png" alt="" />
+					</li>
+					
+				</ul>
+			</div>
+			<div class="item bgcoloref ml10">
+				<h3 class="colorfff title">拉面套餐</h3>
+				<ul>
+					<li class="bgcolorf29">
+						<div class="text-left font16 colorfff">5号桌</div>
+						<h3 class="font20 colorfff lh30">兰州拉面</h3>
+						<div class="font16 colorfff">+香菜 +香菜</div>
+						<div class="font16 text-right colorfff">10分钟</div>
+						
+						<template v-if="isShowBell">
+							
+						<img class="bell" src="img/icn_lingdang.png" alt="" />
+						<span class="text">2</span>
+						</template>
+					</li>
+					<li>
+						<div class="text-left font16 color000">5号桌</div>
+						<h3 class="font20 color000 lh30">兰州拉面</h3>
+						<div class="font16 color95">+香菜 +香菜</div>
+						<div class="font16 text-right color000">10分钟</div>
+					</li>
+					
+					
+				</ul>
+			</div>
+			<div class="item bgcoloref ml10">
+				<h3 class="colorfff title">水饺</h3>
+				<ul>
+					<li>
+						<div class="text-left font16 color000">5号桌</div>
+						<h3 class="font20 color000 lh30">兰州拉面</h3>
+						<div class="font16 color95">+香菜 +香菜</div>
+						<div class="font16 text-right color000">10分钟</div>
+					</li>
+					<li class="bgcolorf29">
+						<div class="text-left font16 colorfff">5号桌</div>
+						<h3 class="font20 colorfff lh30">兰州拉面</h3>
+						<div class="font16 colorfff">+香菜 +香菜</div>
+						<div class="font16 text-right colorfff">10分钟</div>
+					
+					</li>
+					
+				</ul>
+			</div>
+			<div class="item bgcoloref ml10">
+				<h3 class="colorfff title">煎饼</h3>
+				<ul>
+					<li>
+						<div class="text-left font16 color000">5号桌</div>
+						<h3 class="font20 color000 lh30">兰州拉面</h3>
+						<div class="font16 color95">+香菜 +香菜</div>
+						<div class="font16 text-right color000">10分钟</div>
+					</li>
+					<li class="bgcolorf29">
+						<div class="text-left font16 colorfff">5号桌</div>
+						<h3 class="font20 colorfff lh30">兰州拉面</h3>
+						<div class="font16 colorfff">+香菜 +香菜</div>
+						<div class="font16 text-right colorfff">10分钟</div>
+					
+					</li>
+					
+				</ul>
+			</div>
+			<div class="item bgcoloref ml10">
+				<h3 class="colorfff title">包子</h3>
+				<ul>
+					<li class="bgcolorf29">
+						<div class="text-left font16 colorfff">5号桌</div>
+						<h3 class="font20 colorfff lh30">兰州拉面</h3>
+						<div class="font16 colorfff">+香菜 +香菜</div>
+						<div class="font16 text-right colorfff">10分钟</div>
+					
+					</li>
+					<li>
+						<div class="text-left font16 color000">5号桌</div>
+						<h3 class="font20 color000 lh30">兰州拉面</h3>
+						<div class="font16 color95">+香菜 +香菜</div>
+						<div class="font16 text-right color000">10分钟</div>
+					</li>
+					
+					
+				</ul>
+			</div>
+		</div>
+		
+	<script src="js/vue.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script type="text/javascript">
+		new Vue({
+			el:"#contaniner",
+			data:{
+				isShowBell:true
+			},
+			methods:{
+				timeoutRemind:function(){
+					
+					
+					
+					
+				}
+
+
+			}
+		})
+	</script>
+	</body>
+</html>

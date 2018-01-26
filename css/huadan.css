@@ -1,0 +1,108 @@
+ul,
+li,
+h3,
+body
+ {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	
+}
+html {
+	height: 100%;
+}
+
+body {
+	height: 100%;
+	color: #fff;
+	font-size: 18px;
+	background-color: #fff;
+	font-family: "微软雅黑"
+}
+h3{
+	text-align: center;
+	color: #fff;
+	font-size: 18px;
+	line-height: 50px;
+}
+.contaniner{
+	height: 100%;
+}
+.item {
+	float: left;
+	height: 100%;
+	width: 240px;
+	background-color: #000;
+	position: relative;
+}
+.title{
+	background-color: #38cecc;
+	box-shadow: 0px 4px 0px #c9c9c9;
+}
+.bgcolor212{
+	background-color: #212530;
+}
+
+.bgcoloref{
+	background-color: #efefef;
+}
+
+.ml10{
+	margin-left: 10px;
+}
+
+.item ul li{
+	background-color: #dcdcdc;
+	border-radius: 8px;
+	width: 180px;
+	height: 80px;
+	margin:0 auto;
+	margin-top: 20px;
+	padding:10px;
+	position: relative;
+}
+
+.item ul li img{
+	position: absolute;
+	top:0;
+	right: 0;
+}
+.item ul li img.bell{
+	top: 4px;
+	right: 4px;
+}	
+.item ul li span{
+	position: absolute;
+	top: 8px;
+	right: 13px;
+	color: #874306;
+	font-weight: bold;
+}
+.font16{
+	font-size: 16px;
+}
+.font20{
+	font-size: 20px;
+}
+.color95{
+	color: #959595;
+}
+.text-left{
+	text-align: left;
+}
+.text-right{
+	text-align: right;
+}
+.color000{
+	color: #000;
+}
+.lh30{
+	line-height: 30px;
+}
+
+.bgcolorf29{
+	background-color: #f29d8d!important;
+}
+.colorfff{
+	color: #fff;
+}
