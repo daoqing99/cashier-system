@@ -319,12 +319,48 @@ var cashierSystemContainer = new Vue({
 		},
 		//		确认套餐
 		packMakeSure: function() {
-//toast
-			this.isShowToastFn("text");
-			
-			
-			
+
 			if(this.packProductList.length > 0) {
+				
+				var isTrue=[];
+				//			packAllProductList
+				for(var i = 0; i < this.packAllProductList.length; i++) {
+					
+					var min_quantity = this.packAllProductList[i].min_quantity;
+					var max_quantity = this.packAllProductList[i].max_quantity;
+
+					console.log(this.packAllProductList)
+					console.log(this.packProductList)
+
+					for(var j = 0; j < this.packAllProductList[i].site_product_accessory.length; j++) {
+
+						var tempPackid = this.packAllProductList[i].site_product_accessory[j].packid;
+						//						console.log(tempPackid);
+
+						var temNum = 0;
+
+						for(var m = 0; m < this.packProductList.length; m++) {
+
+							if(this.packProductList[m].packid == tempPackid) {
+								temNum++;
+							}
+
+						};
+
+						if(temNum >= min_quantity && temNum <= max_quantity) {
+								isTrue.push(true);
+						}else{
+							
+							isTrue.push(false);
+						}
+
+					}
+				};
+
+console.log(isTrue);
+				//toast
+				this.isShowToastFn("请选择合理的套餐");
+
 				//--------------------------------------
 				var count = 0;
 
@@ -335,7 +371,6 @@ var cashierSystemContainer = new Vue({
 					}
 				};
 
-				console.log(count)
 				if(count == 0) {
 					//					------------------------			
 
@@ -351,9 +386,9 @@ var cashierSystemContainer = new Vue({
 
 			}
 
-			this.p1Show = true;
-			this.p1ShowChild = true;
-			this.p2Show = false;
+			//			this.p1Show = true;
+			//			this.p1ShowChild = true;
+			//			this.p2Show = false;
 		},
 		//		结算
 		finalCheckOut: function() {
@@ -557,7 +592,7 @@ var cashierSystemContainer = new Vue({
 			setTimeout(function() {
 
 				cashierSystemContainer.isShowToast = false;
-			}, 1000)
+			}, 2000)
 		}
 
 	}

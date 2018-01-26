@@ -156,7 +156,7 @@
 					<!--套餐点餐-->
 					<div class="foot-names" v-if="p2Show" v-for="(packFood,packAllfoodIndex) in packAllProductList">
 						<div class="big-type">
-							{{packFood.title}} 1/1      最多选{{packFood.max_quantity}}项/最少选{{packFood.min_quantity}}项   
+							{{packFood.title}}      <span class="big-type-num">最多选{{packFood.max_quantity}}项/最少选{{packFood.min_quantity}}项 </span> 
 						</div>
 						<div :aaa="222" class="food-name" v-for='(sitefood,siteFoodIndex) in packFood.site_product_accessory' @click="selectfood(packAllfoodIndex,siteFoodIndex,2)">
 							{{sitefood.accessory_name}}
