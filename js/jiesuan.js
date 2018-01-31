@@ -1,0 +1,523 @@
+var cashierSystemContainer = new Vue({
+	el: "#contaniner",
+	data: {
+		// p1 不是套餐界面
+		//		p1Show: true,
+		//		p1ShowChild: true,
+		//		p2Show: false,
+
+		// p2套餐界面
+		// p1Show: false,
+		// p1ShowChild: true,
+		// p2Show: true,
+
+		// 收银，支付方式界面
+		p1Show: true,
+		p1ShowChild: false,
+		p2Show: false,
+
+		pageNum: 0, //菜品默认选择
+		payWayIndex: 0, //默认支付方式选择
+		keyBoardNumList: ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', '00', '.', '<img src="img/keyboard_icn_eliminate_normal.png">', '货币汇率'],
+		//		payMoneyIndex: 0, //默认面额选择
+		//		payMoneyList: ["50", "30", "20", "10", "5"],
+		//		numbers:1,
+		allProductList: [], //所有产品
+		packAllProductList: [], //套餐内所有产品
+		shopProductList: [], //单品点餐
+		packProductList: [], //套餐点餐
+		packName: '', //套餐名称
+		site_product_pack_productid: '',
+		packPrice: '', //套餐价格
+		totalPackPrice: '', //选定套餐后价格
+		tempArr: [],
+		getPayWayList: [],
+		memberMsgList: [],
+		isShow: false, //遮罩层设置
+		isShowToast: false, //toast设置
+		toastContent: ''
+
+	},
+	created: function() {
+
+		//			获取门店支付方式
+
+		axios.post('http://icy.iidingyun.com/api/shop_set/shop_pay_type_list_select.vm', {
+
+				shopid: "65428"
+
+			}).then(function(res) {
+				if(res.data.code == "success") {
+
+					console.log(JSON.stringify(res.data.data));
+					cashierSystemContainer.getPayWayList = res.data.data;
+				} else {
+					console.log(res.data.msg);
+				}
+			})
+			.catch(function(error) {
+				console.log(error);
+			});
+
+	},
+	methods: {
+		searchFoodTasteName: function(tempName) {
+
+			
+
+			for(var i = 0; i < this.getProductTaste.length; i++) {
+
+				if(this.getProductTaste[i].food == tempName) {
+					this.tasteList = this.getProductTaste[i].taste;
+					this.isTasteShow = true;
+					this.isShow = true;
+				}
+			}
+
+			for(var m = 0; m < this.getProductTypeTaste.length; m++) {
+
+				if(this.getProductTypeTaste[m].food == tempName) {
+					this.tasteList = this.getProductTypeTaste[m].taste;
+					this.isTasteShow = true;
+					this.isShow = true;
+				}
+			}
+		},
+		selectfood: function(allIndex, foodIndex, type) {
+			//			套餐
+			if(type == 2) {
+				var packData = cashierSystemContainer.packAllProductList[allIndex].site_product_accessory[foodIndex];
+				console.log(packData);
+
+				console.log(cashierSystemContainer.packAllProductList[allIndex])
+
+				cashierSystemContainer.packAllProductList[allIndex].site_product_accessory[foodIndex].num++; //点产品加数量
+
+				//				去重
+
+				var lock = 0;
+				for(var i = 0; i < cashierSystemContainer.packProductList.length; i++) {
+
+					if(cashierSystemContainer.packProductList[i].accessoryid == packData.accessoryid) {
+						lock++;
+					}
+				};
+
+				console.log(lock)
+				if(lock == 0) {
+
+					cashierSystemContainer.packProductList.push(packData);
+				}
+				var isTrue = [];
+				//			packAllProductList
+				for(var i = 0; i < this.packAllProductList.length; i++) {
+
+					var min_quantity = this.packAllProductList[i].min_quantity;
+					var max_quantity = this.packAllProductList[i].max_quantity;
+
+					console.log(this.packAllProductList)
+					console.log(this.packProductList)
+
+					for(var j = 0; j < this.packAllProductList[i].site_product_accessory.length; j++) {
+
+						var tempPackid = this.packAllProductList[i].site_product_accessory[j].packid;
+						//						console.log(tempPackid);
+
+						var temNum = 0;
+
+						for(var m = 0; m < this.packProductList.length; m++) {
+
+							if(this.packProductList[m].packid == tempPackid) {
+								temNum++;
+							}
+
+						};
+
+						if(temNum >= min_quantity && temNum <= max_quantity) {
+							isTrue.push(true);
+						} else {
+
+							isTrue.push(false);
+						}
+
+					}
+				};
+			}
+			//          单品
+			if(type == 1) {
+				var isPackage = cashierSystemContainer.allProductList[allIndex].shop_product[foodIndex].site_product_pack.length;
+
+				cashierSystemContainer.packName = cashierSystemContainer.allProductList[allIndex].shop_product[foodIndex].product_name;
+				cashierSystemContainer.site_product_pack_productid = cashierSystemContainer.allProductList[allIndex].shop_product[foodIndex].productid;
+				cashierSystemContainer.packPrice = cashierSystemContainer.allProductList[allIndex].shop_product[foodIndex].price;
+				if(isPackage > 0) {
+					//			套餐
+					this.p1Show = false;
+					this.p1ShowChild = true;
+					this.p2Show = true;
+
+					cashierSystemContainer.packAllProductList = cashierSystemContainer.allProductList[allIndex].shop_product[foodIndex].site_product_pack;
+					console.log(cashierSystemContainer.packAllProductList);
+
+				} else {
+
+					var foodData = cashierSystemContainer.allProductList[allIndex].shop_product[foodIndex];
+					//				单品
+					cashierSystemContainer.allProductList[allIndex].shop_product[foodIndex].num++; //点产品加数量
+
+					console.log((foodData.productid));
+					var count = 0;
+					for(var i = 0; i < cashierSystemContainer.shopProductList.length; i++) {
+
+						if(cashierSystemContainer.shopProductList[i].productid == foodData.productid) {
+							count++;
+						}
+					};
+
+					console.log(count)
+					if(count == 0) {
+
+						cashierSystemContainer.shopProductList.push(foodData);
+
+						console.log(cashierSystemContainer.shopProductList)
+					}
+
+				}
+			};
+
+		},
+
+		totalNumber: function() {
+			var totalNum = 0;
+			for(var i = 0; i < this.shopProductList.length; i++) {
+				totalNum += this.shopProductList[i].num;
+			};
+			return totalNum;
+		},
+		totalPrice: function(type) {
+			//套餐总价
+			if(type == 2) {
+
+				var totalPriceNum = 0;
+
+				for(var j = 0; j < this.packProductList.length; j++) {
+					totalPriceNum += this.packProductList[j].price * this.packProductList[j].num;
+				};
+				//			console.log(totalPriceNum)
+
+				this.totalPackPrice = totalPriceNum;
+				return totalPriceNum;
+
+			};
+
+			if(type == 1) {
+				//单品总价
+				var totalPriceNum = 0;
+
+				for(var j = 0; j < this.shopProductList.length; j++) {
+					totalPriceNum += this.shopProductList[j].price * this.shopProductList[j].num;
+				};
+				//			console.log(totalPriceNum)
+				return totalPriceNum;
+
+			};
+
+		},
+
+		promotionPrice: function() {
+			var promotionNum = 0;
+
+			for(var m = 0; m < this.shopProductList.length; m++) {
+				promotionNum += (this.shopProductList[m].price - this.shopProductList[m].price) * this.shopProductList[m].num;
+			};
+			return promotionNum;
+
+		},
+		finalPrice: function() {
+			var finalNum = 0;
+			for(var n = 0; n < this.shopProductList.length; n++) {
+				finalNum += this.shopProductList[n].price * this.shopProductList[n].num;
+			};
+			return finalNum;
+
+		},
+		//		确认套餐
+		packMakeSure: function() {
+
+			if(this.packProductList.length > 0) {
+
+				var isTrue = [];
+				//			packAllProductList
+				for(var i = 0; i < this.packAllProductList.length; i++) {
+
+					var min_quantity = this.packAllProductList[i].min_quantity;
+					var max_quantity = this.packAllProductList[i].max_quantity;
+
+					console.log(this.packAllProductList)
+					console.log(this.packProductList)
+
+					for(var j = 0; j < this.packAllProductList[i].site_product_accessory.length; j++) {
+
+						var tempPackid = this.packAllProductList[i].site_product_accessory[j].packid;
+						//						console.log(tempPackid);
+
+						var temNum = 0;
+
+						for(var m = 0; m < this.packProductList.length; m++) {
+
+							if(this.packProductList[m].packid == tempPackid) {
+								temNum++;
+							}
+
+						};
+
+						if(temNum >= min_quantity && temNum <= max_quantity) {
+							isTrue.push(true);
+						} else {
+
+							isTrue.push(false);
+						}
+
+					}
+				};
+
+				console.log(isTrue);
+				//toast
+				this.isShowToastFn("请选择合理的套餐");
+
+				//--------------------------------------
+				var count = 0;
+
+				for(var i = 0; i < this.shopProductList.length; i++) {
+
+					if(this.shopProductList[i].productid == this.site_product_pack_productid) {
+						count++;
+					}
+				};
+
+				if(count == 0) {
+					//					------------------------			
+
+					this.shopProductList.push({
+						product_name: this.packName,
+						price: this.totalPackPrice,
+						productid: this.site_product_pack_productid,
+						num: 1,
+						site_product_accessory: this.packProductList
+					});
+
+				}
+
+			}
+
+			this.p1Show = true;
+			this.p1ShowChild = true;
+			this.p2Show = false;
+		},
+		//		结算
+		finalCheckOut: function() {
+
+			if(this.totalNumber() > 0) {
+				this.p1Show = true;
+				this.p1ShowChild = false;
+				this.p2Show = false;
+			} else {
+
+			}
+
+			console.log(JSON.stringify(cashierSystemContainer.shopProductList))
+		},
+		//选择支付方式
+		selectPayWay: function(index) {
+			this.payWayIndex = index;
+			var typeid = this.getPayWayList[index].typeid;
+			console.log(typeid);
+		},
+		//		选择充值面额
+		//		selectMoney: function(index) {
+		//			this.payMoneyIndex = index;
+		//			var money = this.payMoneyList[index];
+		//			console.log(money)
+		//		}
+		//	数字键盘
+		selectNums: function(index) {
+			var num = this.keyBoardNumList[index];
+			console.log(num);
+		},
+		openAnAccount: function() {
+
+			var mobile = this.memberMsgList.mobile;
+			var cardno = this.memberMsgList.cardno;
+			var user_name = this.memberMsgList.user_name;
+			var shopid = 65428;
+			var data = {
+				user_name: user_name,
+				policyid: "",
+				market_policyid: '',
+				account_status: '',
+				last_msg_date: '',
+				msg_times: '',
+				buyer_type: 0,
+				site_buyer_type: '',
+				login_times: '',
+				barcode: '',
+				level: 1,
+				wx_openid: '',
+				//shopid: shopid,
+				password: '',
+				mobile: mobile,
+				cardno: cardno,
+				referee: '',
+				alipay_openid: ''
+
+			};
+
+			console.log(data);
+
+			axios.post('http://icy.iidingyun.com/api/member/site_buyer_create.vm', data).then(function(res) {
+					console.log(res.data)
+
+					if(res.data.code == "success") {
+
+						console.log(JSON.stringify(res.data.data));
+
+					} else {
+						console.log(res.data.msg);
+					}
+				})
+				.catch(function(error) {
+					console.log(error);
+				});
+		},
+		//		选择堂食时结算支付
+		payMoneyCheckOut: function() {
+
+			var orderProduct = [];
+			var tempOrderProduct = cashierSystemContainer.shopProductList;
+			console.log(tempOrderProduct)
+			var tempProductName = '';
+			for(var i = 0; i < tempOrderProduct.length; i++) {
+
+				//				console.log(tempOrderProduct[i].site_product_accessory.length);
+
+				if(tempOrderProduct[i].site_product_accessory) {
+					tempProductName = tempOrderProduct[i].product_name + "+";
+					for(var m = 0; m < tempOrderProduct[i].site_product_accessory.length; m++) {
+						tempProductName += tempOrderProduct[i].site_product_accessory[m].accessory_name + " ";
+					};
+
+					orderProduct.push({
+						'buyerName': '',
+						//						'createTime': '',
+						'productid': tempOrderProduct[i].site_product_accessory[0].productid,
+						'price': tempOrderProduct[i].price,
+						'productCount': tempOrderProduct[i].num,
+						'productStatus': "confirmed",
+						'productName': tempProductName
+					});
+
+				} else {
+					orderProduct.push({
+						'buyerName': '',
+						//						'createTime': '',
+						'productid': tempOrderProduct[i].productid,
+						'price': tempOrderProduct[i].price,
+						'productCount': tempOrderProduct[i].num,
+						'productStatus': "confirmed",
+						'productName': tempOrderProduct[i].product_name
+					});
+
+				}
+
+			}
+
+			var payData = {
+				"arrivalTime": "2018-01-24 12:47:58",
+				"barcode": this.memberMsgList.barcode,
+				"buyerName": this.memberMsgList.user_name,
+				"buyerRemark": "",
+				"createTime": "2018-01-24 12:02:58",
+				"deliveryBuilding": "3",
+				"deliveryDetailPlace": "",
+				"displayArrivalTime": "2018-01-24 12:02:47",
+				"displayScore": "0.0",
+				"groupid": 0,
+				"ip": "",
+				"lockStatus": "",
+				"mobile": this.memberMsgList.mobile,
+				"operator": "",
+				"payWay": "comp",
+				"orderWay": "self_canteen",
+				"shopOrderid": "self_canteen",
+				"persons": "1",
+				"phone": "13809897810",
+				"points": 0,
+				"receive": 0,
+				"serviceFee": "0",
+				"serviceQuality": null,
+				"shopid": "65428",
+				"shopName": "新餐饮",
+				"siteid": "49071",
+				"smsConfirmation": false,
+				"takenoid": 0,
+				"terminalDevice": "mobile",
+				"ticketNo": "",
+				"totalFee": this.finalPrice(),
+				"discount": 0,
+				"score": 0,
+				"orderStatus": "ORDER_COMPLETED",
+				"orderProduct": orderProduct,
+				"payList": [{
+					"payAmount": this.finalPrice(),
+					"payType": -2,
+					"ticketNo": ""
+				}]
+			};
+			console.log(JSON.stringify(payData));
+			//			下单接口
+
+			axios.post('http://icy.iidingyun.com/api/order/create_order.vm', payData).then(function(res) {
+					if(res.data.code == "success") {
+
+						console.log(JSON.stringify(res.data.print));
+						//					清空单品数据
+						for(var i = 0; i < cashierSystemContainer.shopProductList.length; i++) {
+							cashierSystemContainer.shopProductList[i].num = 0;
+						};
+						cashierSystemContainer.shopProductList = [];
+						//清空套餐数据
+						for(var i = 0; i < cashierSystemContainer.packProductList.length; i++) {
+							cashierSystemContainer.packProductList[i].num = 0;
+						};
+						cashierSystemContainer.packProductList = [];
+
+						//						返回主页
+						cashierSystemContainer.p1Show = true;
+						cashierSystemContainer.p1ShowChild = true;
+						cashierSystemContainer.p2Show = false;
+
+					} else {
+						console.log(res.data.msg);
+					}
+				})
+				.catch(function(error) {
+					console.log(error);
+				});
+
+		},
+
+		isShowToastFn: function(content) {
+			cashierSystemContainer.isShowToast = true, //toast设置
+				cashierSystemContainer.toastContent = content;
+			setTimeout(function() {
+
+				cashierSystemContainer.isShowToast = false;
+			}, 2000)
+		},
+		getInputVal: function(index) {
+			this.PayWayList[index].price = "" + this.PayWayList[index].price + this.selectNums(index);
+		}
+
+	}
+
+})

@@ -2,9 +2,9 @@ var cashierSystemContainer = new Vue({
 	el: "#contaniner",
 	data: {
 		// p1 不是套餐界面
-		p1Show: true,
-		p1ShowChild: true,
-		p2Show: false,
+//		p1Show: true,
+//		p1ShowChild: true,
+//		p2Show: false,
 
 		// p2套餐界面
 		// p1Show: false,
@@ -12,9 +12,9 @@ var cashierSystemContainer = new Vue({
 		// p2Show: true,
 
 		// 收银，支付方式界面
-		// p1Show: true,
-		// p1ShowChild: false,
-		// p2Show: false,
+		 p1Show: true,
+		 p1ShowChild: false,
+		 p2Show: false,
 
 		pageNum: 0, //菜品默认选择
 		payWayIndex: 0, //默认支付方式选择
@@ -136,10 +136,10 @@ var cashierSystemContainer = new Vue({
 
 					cashierSystemContainer.packProductList.push(packData);
 				}
-               	var isTrue=[];
+				var isTrue = [];
 				//			packAllProductList
 				for(var i = 0; i < this.packAllProductList.length; i++) {
-					
+
 					var min_quantity = this.packAllProductList[i].min_quantity;
 					var max_quantity = this.packAllProductList[i].max_quantity;
 
@@ -162,9 +162,9 @@ var cashierSystemContainer = new Vue({
 						};
 
 						if(temNum >= min_quantity && temNum <= max_quantity) {
-								isTrue.push(true);
-						}else{
-							
+							isTrue.push(true);
+						} else {
+
 							isTrue.push(false);
 						}
 
@@ -354,11 +354,11 @@ var cashierSystemContainer = new Vue({
 		packMakeSure: function() {
 
 			if(this.packProductList.length > 0) {
-				
-				var isTrue=[];
+
+				var isTrue = [];
 				//			packAllProductList
 				for(var i = 0; i < this.packAllProductList.length; i++) {
-					
+
 					var min_quantity = this.packAllProductList[i].min_quantity;
 					var max_quantity = this.packAllProductList[i].max_quantity;
 
@@ -381,16 +381,16 @@ var cashierSystemContainer = new Vue({
 						};
 
 						if(temNum >= min_quantity && temNum <= max_quantity) {
-								isTrue.push(true);
-						}else{
-							
+							isTrue.push(true);
+						} else {
+
 							isTrue.push(false);
 						}
 
 					}
 				};
 
-console.log(isTrue);
+				console.log(isTrue);
 				//toast
 				this.isShowToastFn("请选择合理的套餐");
 
@@ -419,9 +419,9 @@ console.log(isTrue);
 
 			}
 
-						this.p1Show = true;
-						this.p1ShowChild = true;
-						this.p2Show = false;
+			this.p1Show = true;
+			this.p1ShowChild = true;
+			this.p2Show = false;
 		},
 		//		结算
 		finalCheckOut: function() {
@@ -626,7 +626,11 @@ console.log(isTrue);
 
 				cashierSystemContainer.isShowToast = false;
 			}, 2000)
+		},
+		getInputVal:function(index){
+			this.PayWayList[index].price=""+this.PayWayList[index].price+this.selectNums(index);
 		}
+
 
 	}
 

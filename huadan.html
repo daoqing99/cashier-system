@@ -120,12 +120,19 @@
 		new Vue({
 			el:"#contaniner",
 			data:{
-				isShowBell:true
+				isShowBell:false
 			},
-			methods:{
+			computed:{
 				timeoutRemind:function(){
 					
-					
+					setInterval(function(){
+						this.isShowBell=true;
+						
+						setTimeout(function(){
+							this.isShowBell=false;
+						},500);
+						
+					},200);
 					
 					
 				}

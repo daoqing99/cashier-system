@@ -280,19 +280,7 @@
 					</div>
 					<div class="keybord">
 						<ul>
-							<!--<li>7</li>
-							<li>8</li>
-							<li>9</li>
-							<li>4</li>
-							<li>5</li>
-							<li>6</li>
-							<li>1</li>
-							<li>2</li>
-							<li>3</li>
-							<li>0</li>
-							<li>00</li>
-							<li>.</li>-->
-							<!--<li><img src="img/keyboard_icn_eliminate_normal.png" alt=""></li>-->
+							
 							<li :class="{huilv:numIndex==13}" v-for="(num,numIndex) in keyBoardNumList" v-html="num" @click="selectNums(numIndex)"></li>
 						</ul>
 					</div>
@@ -303,7 +291,7 @@
 					<div class="btns">
 						<button class="tangshi" @click="payMoneyCheckOut()">堂食</button>
 						<button class="ziqu">自取</button>
-						<button class="fanhui" @click="returnFn()">返回</button>
+						<button class="fanhui">返回</button>
 					</div>
 				</div>
 			</div>
@@ -316,7 +304,7 @@
 		</div>
 	</body>
 	<script src="js/vue.js"></script>
-	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="js/axios.min.js"></script>
 	<script src="js/cashier-system.js"></script>
 
 </html>

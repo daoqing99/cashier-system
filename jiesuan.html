@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<title>结算</title>
+		<link rel="stylesheet" href="css/normalize.css">
+		<link rel="stylesheet" href="css/jiesuan.css">
+	</head>
+
+	<body>
+		<div class="contaniner" id="contaniner">
+			<!-- 左边 -->
+			<div class="title">
+				<h3>订单详情</h3>
+			</div>
+			<!-- 中间 -->
+			<div class="cashier">
+
+				<!-- 收银 -->
+				<div class="shouyin-container" v-if="!p1ShowChild">
+					<div class="shouyin-way">
+						<div class="payway">
+							<ul>
+								<li v-for="(pay,payIndex) in getPayWayList" v-if="pay.pay_type_code || pay.type_name" :typeid="pay.typeid" :shopid="pay.shopid" :class="{active3:payWayIndex==payIndex}" @click="selectPayWay(payIndex)">{{pay.type_name}}</li>
+								<!--<li>银联卡</li>
+							<li>口碑</li>
+							<li>储蓄卡</li>
+							<li>支付宝</li>
+							<li>微信</li>
+							<li>闪惠</li>
+							<li>闪惠</li>
+							<li>口碑</li>
+							<li>储蓄卡</li>
+							<li>支付宝</li>
+							<li>微信</li>
+							<li>闪惠</li>
+							<li>闪惠</li>-->
+							</ul>
+							<!--<ul>
+							<li :class="{active3:payMoneyIndex==moneyIndex}" v-for="(money,moneyIndex) in payMoneyList" @click="selectMoney(moneyIndex)">¥ {{money}}</li>
+							<li>¥ 30</li>
+							<li>¥ 20</li>
+							<li>¥ 10</li>
+							<li>¥ 5</li>
+						</ul>-->
+							<ul>
+								<li class="coupons active3">优惠券1
+									<br> 优惠券1</li>
+								<li class="coupons">优惠券1
+									<br> 优惠券1</li>
+								<li class="coupons">优惠券1
+									<br> 优惠券1</li>
+								<li class="coupons">优惠券1
+									<br> 优惠券1</li>
+								<li class="coupons">优惠券1
+									<br> 优惠券1</li>
+								<li class="coupons">优惠券1
+									<br> 优惠券1</li>
+								<li class="coupons">优惠券1
+									<br> 优惠券1</li>
+							</ul>
+						</div>
+
+					</div>
+					<div class="calc">
+						<ul class="member">
+							<li>会员</li>
+							<li>姓名： <input v-model="memberMsgList.user_name" type="text" />
+								<span>余额：¥50</span>
+							</li>
+							<li>会员号：{{memberMsgList.userid}}</li>
+							<li>卡号：<input v-model="memberMsgList.cardno" type="text" /></li>
+							<li>预存：</li>
+							<li>电话： <input v-model='memberMsgList.mobile' type="text" name="" id="" value="" /></li>
+							<li class="btn">
+								<button>注销</button>
+								<button @click="openAnAccount()">开户</button>
+								<button class="active3">充值</button>
+							</li>
+						</ul>
+
+						<div class="payway-select">
+							<div>
+								<div class="money">
+									<span>合计¥{{totalPrice(1)}}</span>
+									<span>优惠
+                                <span class="colorred">¥ {{promotionPrice()}}</span>
+									</span>
+									<span>实收
+                                <span class="colorred">¥ {{finalPrice()}}</span>
+									</span>
+								</div>
+								<ul>
+									<li class="active4">
+										<span class="txt">优惠券（¥）：</span>
+										<input type="number"><img src="img/btn_delete.png" alt="">
+									</li>
+									<li>
+										<span class="txt">现金（¥）：</span>
+										<input type="number"><img src="img/btn_delete.png" alt=""></li>
+									<li>
+										<span class="txt">储蓄卡（¥）：</span>
+										<input type="number"><img src="img/btn_delete.png" alt=""></li>
+									<li>
+										<span class="txt">找零（¥）：</span>
+										<input type="number"><img src="img/btn_delete.png" alt=""></li>
+								</ul>
+							</div>
+						</div>
+						<div class="keybord">
+							<ul>
+
+								<li :class="{huilv:numIndex==13}" v-for="(num,numIndex) in keyBoardNumList" v-html="num" @click="selectNums(numIndex)"></li>
+							</ul>
+						</div>
+					</div>
+					<div class="eat">
+						扫码
+						<input type="text">
+						<div class="btns">
+							<button class="tangshi" @click="payMoneyCheckOut()">堂食</button>
+							<button class="ziqu">自取</button>
+							<button class="fanhui" @click="returnFn()">返回</button>
+						</div>
+					</div>
+				</div>
+				<div v-if="isShow" :class="{mask:isShow}"></div>
+				<div class="toast-container" v-if="isShowToast">
+
+					{{toastContent}}
+
+				</div>
+			</div>
+			</div>
+	</body>
+	<script src="js/vue.js"></script>
+	<script src="js/axios.min.js"></script>
+	<script src="js/jiesuan.js"></script>
+
+</html>

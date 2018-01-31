@@ -1,0 +1,199 @@
+ul,
+li,
+h3,
+body,
+dl,
+dt,
+dd {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-size: 14px;
+	background-color: #f2f6ff;
+}
+
+#orderContainer.contaniner {
+	padding: 0 30px;
+	margin: 0 auto;
+}
+
+#orderContainer.contaniner .title {
+	background-color: #fff;
+}
+
+#orderContainer h3 {
+	font-size: 16px;
+	height: 50px;
+	color: #fff;
+	background-color: #38cecc;
+	line-height: 50px;
+	text-align: center;
+	width: 150px;
+}
+
+#orderContainer .customer {
+	background-color: #fff;
+	border-radius: 10px;
+	margin-top: 10px;
+}
+
+#orderContainer .table td {
+	border-top: none;
+}
+
+#orderContainer .table td .form-control {
+	width: auto;
+	display: inline-block;
+	border: 1px solid #38cecc;
+}
+
+#orderContainer .form-control:focus {
+	box-shadow: none;
+	border: 1px solid #38cecc;
+}
+
+#orderContainer .customer .table tr:last-child td {
+	border-top: 1px solid #dee2e6;
+}
+
+#orderContainer .product {
+	background-color: #fff;
+	margin-top: 20px;
+	border-radius: 20px;
+	padding-top: 10px;
+	/*border: 1px solid #f00;*/
+	padding-bottom: 15px;
+}
+
+#orderContainer .product .table th {
+	background-color: #e5eefd;
+	border-top: none;
+	font-weight: normal;
+}
+
+#orderContainer .lh40 {
+	line-height: 40px;
+}
+
+#orderContainer .color38 {
+	color: #38cecc!important;
+}
+
+#orderContainer .colorfff {
+	color: #fff!important;
+}
+
+#orderContainer .bgcolor38 {
+	background-color: #38cecc!important;
+}
+
+#orderContainer .bgcolorff6 {
+	background-color: #ff6160!important;
+}
+
+#orderContainer .border38 {
+	border: 1px solid #38cecc!important;
+}
+
+#orderContainer .borderff6 {
+	border: 1px solid #ff6160!important;
+}
+
+#orderContainer .btn:focus,
+#orderContainer .btn.focus {
+	outline: 0;
+	box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.25);
+}
+
+#orderContainer .btn-success1 {
+	background-color: #38cecc;
+	border: none;
+	border-radius: 30px;
+	width: 70%;
+	outline: medium;
+	color: #fff;
+}
+
+#orderContainer .btn-success1:hover {
+	background-color: #38cecc;
+}
+
+#orderContainer .product tr input[type=text] {
+	border: none;
+	border: 1px solid #38cecc;
+	width: 30%;
+	height: 30px;
+	text-align: center;
+	border-radius: 30px;
+	color: #38cecc;
+	outline: medium;
+}
+
+#orderContainer .product tr td {
+	border-bottom: 1px solid #E5E5E5;
+}
+
+#orderContainer .colorf00 {
+	color: #f00;
+}
+
+#orderContainer .coolora0 {
+	color: #a0a0a0;
+}
+
+#orderContainer .product>div {
+	text-align: center;
+	font-size: 14px;
+	line-height: 40px;
+}
+
+#orderContainer .product>div>span {
+	margin: 0 2%;
+}
+
+#orderContainer .bordertop {
+	border-top: 1px solid #E5E5E5;
+}
+
+#orderContainer .product ul li .form-control {
+	width: auto;
+	display: inline-block;
+}
+
+#orderContainer .product ul {
+	width: 80%;
+	overflow: hidden;
+	margin: 0 auto;
+}
+
+#orderContainer .product ul li {
+	float: left;
+	line-height: 40px;
+	margin: 0 10px;
+}
+
+#orderContainer .product .btns {
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+
+#orderContainer .product .btns li {
+	border: 1px solid #f00;
+	width: 12%;
+	border-radius: 30px;
+	color: #f00;
+	text-align: center;
+	font-size: 18px;
+	cursor: pointer;
+}
+
+#orderContainer .product ul li input[type=text] {
+	line-height: 30px;
+	border: 1px solid #E5E5E5;
+	outline: medium;
+	border-radius: 20px;
+	padding-left: 10px;
+}
